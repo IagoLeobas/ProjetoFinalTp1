@@ -1,0 +1,77 @@
+<!DOCTYPE html >
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:outputStylesheet name="style.css" library="css" />
+<h:outputStylesheet library="css" name="style.css" />
+<h:outputStylesheet library="css" name="bootstrap.min.css" />
+
+
+
+	<h:head>
+		<title>Login</title>
+
+	</h:head>
+
+
+<h:form>
+	<h:body>
+
+			
+		<div id="login">
+			<div class="container">
+				<div id="login-row"
+					class="row justify-content-center align-items-center">
+					<div id="login-column" class="col-md-6">
+						<div id="login-box" class="col-md-12">
+							<p><h:messages style="color:red;margin:8px;" styleClass="messages"/></p>
+								<h3 class="text-center text-info">Login</h3>
+								<div class="form-group">
+									<h:outputLabel value="Login" styleClass="text-info" />
+									<h:inputText value="#{loginController.usu.login}"
+										styleClass="form-control" />
+								</div>
+								<div class="form-group">
+									<h:outputLabel value="Senha" styleClass="text-info" />
+									<h:inputSecret value="#{loginController.usu.senha}"
+										styleClass="form-control" />
+								</div>
+								<div class="form-group">
+									<h:outputLabel value="Tipo" styleClass="text-info" />
+									<h:selectOneRadio value="#{loginController.usu.tipo}">
+										<f:selectItems value="#{loginController.tipo}" var="obj"
+											itemLabel="#{obj.label}" />
+									</h:selectOneRadio>
+								</div>
+								<div id="register-link" class="text-right">
+									<h:commandButton value="Entrar"
+										action="#{loginController.logar}"
+										styleClass="btn btn-info btn-md" />
+
+
+								</div>
+							
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+
+
+
+
+
+	</h:body>
+
+
+
+</h:form>
+
+
+
+</html>
+
