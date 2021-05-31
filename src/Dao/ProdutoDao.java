@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Application.Util;
+import model.Categoria;
 import model.Origem;
 import model.Produto;
 
@@ -18,9 +19,9 @@ public class ProdutoDao implements Dao{
 		
 		StringBuffer sql = new StringBuffer();
 		sql.append("INSERT INTO produto ");
-		sql.append(" (produto,marca,descricao,origem) ");
+		sql.append(" (produto,marca,descricao,origem,categoria,preco) ");
 		sql.append("VALUES ");
-		sql.append(" (?, ?, ?, ?) ");
+		sql.append(" (?, ?, ?, ?, ?, ?) ");
 		
 		
 		PreparedStatement stat = null;
@@ -32,6 +33,8 @@ public class ProdutoDao implements Dao{
 			stat.setString(2, p.getMarca());
 			stat.setString(3, p.getDescricao());
 			stat.setString(4, p.getOrigem().getLabel());
+			stat.setString(5, p.getCategoria().getLabel());
+			stat.setFloat(6, p.getPreco());
 			stat.execute();
 			
 			Util.addErrorMessage("Produto inserido com sucesso!");
@@ -117,6 +120,8 @@ public class ProdutoDao implements Dao{
 				produto.setMarca(rs.getString("marca"));
 				produto.setDescricao(rs.getString("descricao"));
 				produto.setOrigem(achaOrigem(rs.getString("origem")));
+				produto.setCategoria(achaCategoria(rs.getString("categoria")));
+				produto.setPreco(rs.getFloat("preco"));
 				
 				listaproduto.add(produto);
 			}
@@ -155,6 +160,29 @@ public class ProdutoDao implements Dao{
 		return null;
 	}
 	
+	public static Categoria achaCategoria(String cat) {
+		if(cat.equals(Categoria.MEMORIA.getLabel()))
+			return Categoria.MEMORIA;
+		else if(cat.equals(Categoria.GABINETE.getLabel()))
+			return Categoria.GABINETE;
+		else if(cat.equals(Categoria.CPU.getLabel()))
+			return Categoria.CPU;
+		else if(cat.equals(Categoria.GPU.getLabel()))
+			return Categoria.GPU;
+		else if(cat.equals(Categoria.PLACA_MAE.getLabel()))
+			return Categoria.PLACA_MAE;
+		else if(cat.equals(Categoria.SOM.getLabel()))
+			return Categoria.SOM;
+		else if(cat.equals(Categoria.MONITOR.getLabel()))
+			return Categoria.MONITOR;
+		else if(cat.equals(Categoria.PERIFERICOS.getLabel()))
+			return Categoria.PERIFERICOS;
+		
+		
+		
+		return null;
+	}
+	
 	
 	
 	public static void alterar(Produto p){
@@ -166,7 +194,9 @@ public class ProdutoDao implements Dao{
 		sql.append(" produto = ?, ");
 		sql.append(" marca = ?, ");
 		sql.append(" descricao = ?, ");
-		sql.append(" origem = ? ");
+		sql.append(" origem = ?, ");
+		sql.append(" categoria = ?, ");
+		sql.append(" preco = ? ");
 		sql.append("WHERE ");
 		sql.append(" idproduto = ? ");
 		
@@ -179,6 +209,8 @@ public class ProdutoDao implements Dao{
 			stat.setString(3, p.getDescricao());
 			stat.setString(4, p.getOrigem().getLabel());
 			stat.setInt(5, p.getId());
+			stat.setString(6, p.getCategoria().getLabel());
+			stat.setFloat(7, p.getPreco());
 			stat.execute();
 
 			Util.addErrorMessage("Produto alterado com sucesso!");
@@ -221,6 +253,8 @@ public class ProdutoDao implements Dao{
 		sql.append("  produto.marca, ");
 		sql.append("  produto.descricao, ");
 		sql.append("  produto.origem, ");
+		sql.append("  produto.categoria, ");
+		sql.append("  produto.preco ");
 		sql.append("FROM ");
 		sql.append("  produto, ");
 		sql.append("WHERE ");
@@ -242,6 +276,8 @@ public class ProdutoDao implements Dao{
 				p.setMarca(rs.getString("marca"));
 				p.setDescricao(rs.getString("descricao"));
 				p.setOrigem(achaOrigem(rs.getString("origem")));
+				p.setCategoria(achaCategoria(rs.getString("categoria")));
+				p.setPreco(rs.getFloat("preco"));
 				
 			}
 			

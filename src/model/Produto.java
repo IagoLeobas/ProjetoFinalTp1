@@ -13,6 +13,7 @@ public class Produto {
 	    private String marca;
 		private Categoria categoria;
 	    private Origem origem;
+	    private float preco;
 	    private int id;
 	 
 	    
@@ -22,7 +23,7 @@ public class Produto {
 	    
 		
 		
-		public Produto(String produto, String descricao, String marca, Origem origem, int id,Categoria categoria) {
+		public Produto(String produto, String descricao, String marca, Origem origem, int id,Categoria categoria,float preco) {
 			super();
 			this.produto = produto;
 			this.descricao = descricao;
@@ -30,6 +31,7 @@ public class Produto {
 			this.origem = origem;
 			this.id = id;
 			this.categoria = categoria;
+			this.preco = preco;
 			
 		}
 
@@ -76,6 +78,18 @@ public class Produto {
 
 		public void setCategoria(Categoria categoria) {
 			this.categoria = categoria;
+		}
+
+
+
+		public float getPreco() {
+			return preco;
+		}
+
+
+
+		public void setPreco(float preco) {
+			this.preco = preco;
 		}
 	
 	    
