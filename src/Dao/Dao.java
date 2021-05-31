@@ -7,16 +7,13 @@ import java.sql.SQLException;
 
 public interface Dao {
 	
-	//public boolean adicionar();
-	//public boolean alterar();
-	//public boolean remover();
 	
 	public static Connection getConnection() {
 		
 		 try {
 				Class.forName("org.postgresql.Driver");
 				Connection connection = null;
-				connection = DriverManager.getConnection("jdbc:postgresql://127.0.0.1:5432/desafio8", "postgres", "123456");
+				connection = DriverManager.getConnection("jdbc:postgresql://127.0.0.1:5432/cyberplace", "postgres", "123456");
 				return connection;
 		    } catch (ClassNotFoundException e) {
 				System.out.println("O Driver não foi encontrado.");

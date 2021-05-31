@@ -11,6 +11,7 @@ public class Produto {
 	    private String descricao;
 		@NotEmpty(message="Campo marca não pode estar vazio!")
 	    private String marca;
+		private Categoria categoria;
 	    private Origem origem;
 	    private int id;
 	 
@@ -21,13 +22,14 @@ public class Produto {
 	    
 		
 		
-		public Produto(String produto, String descricao, String marca, Origem origem, int id) {
+		public Produto(String produto, String descricao, String marca, Origem origem, int id,Categoria categoria) {
 			super();
 			this.produto = produto;
 			this.descricao = descricao;
 			this.marca = marca;
 			this.origem = origem;
 			this.id = id;
+			this.categoria = categoria;
 			
 		}
 
@@ -62,6 +64,18 @@ public class Produto {
 		}
 		public void setId(int id) {
 			this.id = id;
+		}
+
+
+
+		public Categoria getCategoria() {
+			return categoria;
+		}
+
+
+
+		public void setCategoria(Categoria categoria) {
+			this.categoria = categoria;
 		}
 	
 	    
