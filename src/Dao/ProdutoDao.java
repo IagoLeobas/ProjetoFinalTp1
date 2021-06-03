@@ -63,7 +63,7 @@ public class ProdutoDao implements Dao{
 		
 		StringBuffer sql = new StringBuffer();
 		sql.append("DELETE FROM produto");
-		sql.append(" WHERE idproduto = ");
+		sql.append(" WHERE idprod = ");
 		sql.append(p.getId());
 		
 		
@@ -102,7 +102,7 @@ public class ProdutoDao implements Dao{
 		StringBuffer sql = new StringBuffer();
 		sql.append("SELECT * ");
 		sql.append(" FROM ");
-		sql.append(" produto, ");
+		sql.append(" produto ");
 		
 		
 		
@@ -115,7 +115,7 @@ public class ProdutoDao implements Dao{
 			
 			while(rs.next()) {
 				Produto produto = new Produto();
-				produto.setId(rs.getInt("idproduto"));
+				produto.setId(rs.getInt("idprod"));
 				produto.setProduto(rs.getString("produto"));
 				produto.setMarca(rs.getString("marca"));
 				produto.setDescricao(rs.getString("descricao"));
@@ -198,7 +198,7 @@ public class ProdutoDao implements Dao{
 		sql.append(" categoria = ?, ");
 		sql.append(" preco = ? ");
 		sql.append("WHERE ");
-		sql.append(" idproduto = ? ");
+		sql.append(" idprod  = ? ");
 		
 	
 		PreparedStatement stat = null;
@@ -208,9 +208,9 @@ public class ProdutoDao implements Dao{
 			stat.setString(2, p.getMarca());
 			stat.setString(3, p.getDescricao());
 			stat.setString(4, p.getOrigem().getLabel());
-			stat.setInt(5, p.getId());
-			stat.setString(6, p.getCategoria().getLabel());
-			stat.setFloat(7, p.getPreco());
+			stat.setString(5, p.getCategoria().getLabel());
+			stat.setFloat(6, p.getPreco());
+			stat.setInt(7, p.getId());
 			stat.execute();
 
 			Util.addErrorMessage("Produto alterado com sucesso!");
@@ -248,17 +248,17 @@ public class ProdutoDao implements Dao{
 		StringBuffer sql = new StringBuffer();
 		
 		sql.append("SELECT ");
-		sql.append("  produto.idproduto, ");
-		sql.append("  produto.produto, ");
-		sql.append("  produto.marca, ");
-		sql.append("  produto.descricao, ");
-		sql.append("  produto.origem, ");
-		sql.append("  produto.categoria, ");
-		sql.append("  produto.preco ");
-		sql.append("FROM ");
+		sql.append("  idprod, ");
 		sql.append("  produto, ");
+		sql.append("  marca, ");
+		sql.append("  descricao, ");
+		sql.append("  origem, ");
+		sql.append("  categoria, ");
+		sql.append("  preco ");
+		sql.append("FROM ");
+		sql.append("  produto ");
 		sql.append("WHERE ");
-		sql.append("  produto.idproduto = ? ");
+		sql.append("  idprod = ? ");
 
 	
 		PreparedStatement stat = null;
@@ -271,7 +271,7 @@ public class ProdutoDao implements Dao{
 			
 		    if(rs.next()) {
 		    	p = new Produto();
-				p.setId(rs.getInt("idproduto"));
+				p.setId(rs.getInt("idprod"));
 				p.setProduto(rs.getString("produto"));
 				p.setMarca(rs.getString("marca"));
 				p.setDescricao(rs.getString("descricao"));

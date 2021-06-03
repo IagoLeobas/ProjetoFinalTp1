@@ -1,6 +1,5 @@
 package controller;
 import java.io.Serializable;
-
 import java.util.List;
 
 import javax.faces.context.Flash;
@@ -9,6 +8,7 @@ import javax.inject.Named;
 
 import Application.FlashEasy;
 import Dao.ProdutoDao;
+import model.Categoria;
 import model.Origem;
 import model.Produto;
 ;
@@ -25,6 +25,7 @@ public class ProdutoController implements Serializable{
 	private Produto prod = null;
 	private List<Produto> listaProd = null;
     private Origem origem[];
+    private Categoria categoria[];
     private boolean ativador = false;
   
  
@@ -72,7 +73,13 @@ public void adicionar() {
    }
     
     
-    
+    public Categoria[] getCategoria() {
+    	if(categoria == null) {
+    		categoria = Categoria.values();
+    	}
+    	
+    	return categoria;
+    }
 
     public Origem[] getOrigem() {
 		if(origem == null) {
@@ -112,6 +119,11 @@ public void adicionar() {
 
 	public void setAtivador(boolean ativador) {
 		this.ativador = ativador;
+	}
+
+
+	public void setCategoria(Categoria[] categoria) {
+		this.categoria = categoria;
 	}
 
 
