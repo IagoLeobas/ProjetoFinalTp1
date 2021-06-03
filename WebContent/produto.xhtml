@@ -1,0 +1,77 @@
+<!DOCTYPE html >
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:iu="http://xmlns.jcp.org/jsf/facelets">
+
+
+<ui:composition template="/template.xhtml">
+<ui:define name="conteudo">
+	
+	<h:body>
+		 
+		 <h1>Cadastro produto</h1>
+		
+		<h:form id="produto">
+		 	 <h:messages id="message" style="color:blue;margin:8px;"/>
+		 	
+		 	<h:panelGrid columns ="2" id="pg1">
+		 	
+			 	<h:outputLabel value="PRODUTO" />
+				<h:inputText value="#{produtoController.prod.produto}"/>
+				
+				<h:outputLabel value="DESCRIÇÃO" />
+				<h:inputText value="#{produtoController.prod.descricao}"/>
+				
+				<h:outputLabel value="MARCA" />
+				<h:inputText value="#{produtoController.prod.marca}"/>
+				
+				
+				<h:outputLabel value="ORIGEM"  />
+			    <h:selectOneRadio value="#{produtoController.prod.origem}">
+			    	<f:selectItems value="#{produtoController.origem}" var="obj" itemLabel="#{obj}"/>
+			    </h:selectOneRadio>
+			    
+			    <h:outputLabel value="Preço" />
+				<h:inputText value="#{produtoController.prod.preco}"/>
+				
+				<h:outputLabel value="Categoria"  />
+				 <h:selectOneMenu value="#{produtoController.prod.categoria}">
+			    	<f:selectItems value="#{produtoController.categoria}" var="obj" itemLabel="#{obj}"/>
+			    </h:selectOneMenu>
+				
+		 	</h:panelGrid>
+		 	
+		    <h:panelGroup id="comandos">
+			 	<h:commandButton value="adicionar" actionListener="#{produtoController.adicionar}">
+			 		<f:ajax execute="@all" render="@all"  />
+			 	</h:commandButton>
+			 	
+			 	<h:commandButton value="alterar" actionListener="#{produtoController.alterar}" rendered="#{produtoController.ativador}">
+			 		<f:ajax execute="produto" render="data pg1 message"  />
+			 	</h:commandButton>
+			 	
+			 	<h:commandButton value="limpar" actionListener="#{produtoController.limpar}">
+			 		<f:ajax execute="produto" render="data pg1"  />
+			 	</h:commandButton>
+			 	
+			 	<h:commandButton value="voltar" action="#{produtoController.voltar}" rendered="#{produtoController.ativador}">
+			 		<f:ajax execute="@this"/>
+			 	</h:commandButton>
+			 		
+			
+			 </h:panelGroup>
+			 
+			 
+		 </h:form>
+	
+	
+	</h:body>
+	<h:outputScript library="javax.faces" name="jsf.js" target="head" />
+	
+	</ui:define>
+</ui:composition>
+
+</html>

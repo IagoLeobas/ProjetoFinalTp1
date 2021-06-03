@@ -21,7 +21,7 @@ public class UsuarioDao implements Dao {
 		
 		StringBuffer sql = new StringBuffer();
 		sql.append("SELECT ");
-		sql.append("  u.idusuario, ");
+		sql.append("  u.idusu, ");
 		sql.append("  u.cpf, ");
 		sql.append("  u.nome, ");
 		sql.append("  u.email, ");
@@ -46,7 +46,7 @@ public class UsuarioDao implements Dao {
 			
 			if(rs.next()) {
 				usuarioLogado = new Usuario();
-				usuarioLogado.setId(rs.getInt("idusuario"));
+				usuarioLogado.setId(rs.getInt("idusu"));
 				usuarioLogado.setCpf(rs.getString("cpf"));
 				usuarioLogado.setNome(rs.getString("nome"));
 				usuarioLogado.setLogin(rs.getString("login"));
@@ -119,7 +119,7 @@ public class UsuarioDao implements Dao {
 		StringBuffer sql = new StringBuffer();
 		
 		sql.append("DELETE FROM usuario ");
-		sql.append("WHERE idusuario = ");
+		sql.append("WHERE idusu = ");
 		sql.append(usu.getId());
 		
 		PreparedStatement stat = null;
@@ -151,7 +151,7 @@ public class UsuarioDao implements Dao {
 		sql.append(" cpf = ?, ");
 		sql.append(" tipo = ?, ");
 		sql.append(" email = ? ");
-		sql.append("WHERE idusuario = ");
+		sql.append("WHERE idusu = ");
 		sql.append(usu.getId());
 		
 		PreparedStatement stat = null;
@@ -192,15 +192,15 @@ public class UsuarioDao implements Dao {
 			StringBuffer sql = new StringBuffer();
 			
 			sql.append("SELECT ");
-			sql.append("usuario.idusuario, ");
-			sql.append("usuario.nome, ");
-			sql.append("usuario.login, ");
-			sql.append("usuario.cpf, ");
-			sql.append("usuario.senha, ");
-			sql.append("usuario.tipo ");
-			sql.append("usuario.email ");
-			sql.append("FROM ");
-			sql.append("usuario ");
+			sql.append(" idusu, ");
+			sql.append(" nome, ");
+			sql.append(" login, ");
+			sql.append(" cpf, ");
+			sql.append(" senha, ");
+			sql.append(" tipo, ");
+			sql.append(" email ");
+			sql.append(" FROM ");
+			sql.append(" usuario ");
 			
 			try {
 				
@@ -211,7 +211,7 @@ public class UsuarioDao implements Dao {
 					
 					Usuario usu = new Usuario();
 					
-					usu.setId(rs.getInt("idusuario"));
+					usu.setId(rs.getInt("idusu"));
 					usu.setNome(rs.getString("nome"));
 					usu.setCpf(rs.getString("cpf"));
 					usu.setLogin(rs.getString("login"));
@@ -243,17 +243,17 @@ public class UsuarioDao implements Dao {
 		StringBuffer sql = new StringBuffer(); 
 			
 			sql.append("SELECT ");
-			sql.append(" u.idusuario, ");
-			sql.append(" u.nome, ");
-			sql.append(" u.login, ");
-			sql.append(" u.senha, ");
-			sql.append(" u.cpf, ");
-			sql.append(" u.tipo, ");
-			sql.append(" u.email ");
+			sql.append(" idusu, ");
+			sql.append(" nome, ");
+			sql.append(" login, ");
+			sql.append(" senha, ");
+			sql.append(" cpf, ");
+			sql.append(" tipo, ");
+			sql.append(" email ");
 			sql.append(" FROM ");
-			sql.append(" usuario u");
-			sql.append(" WHERE ");
-			sql.append(" idusuario = ? ");
+			sql.append(" usuario ");
+			sql.append("WHERE ");
+			sql.append(" idusu = ? ");
 			
 			PreparedStatement stat = null;
 			ResultSet rs = null;
@@ -266,7 +266,7 @@ public class UsuarioDao implements Dao {
 				
 				if(rs.next()) {
 					usu = new Usuario();
-					usu.setId(rs.getInt("idusuario"));
+					usu.setId(rs.getInt("idusu"));
 					usu.setNome(rs.getString("nome"));
 					usu.setLogin(rs.getString("login"));
 					usu.setSenha(rs.getString("senha"));

@@ -32,7 +32,7 @@ public class LoginController implements Serializable{
 			Usuario usuarioLogado = UsuarioDao.validarLogin(usu);
 			if (usuarioLogado != null) {
 				Session.getInstance().set("usuarioLogado", usuarioLogado);
-				return "menu.xhtml?faces-redirect=true";
+				return "template.xhtml?faces-redirect=true";
 				
 			}
 			

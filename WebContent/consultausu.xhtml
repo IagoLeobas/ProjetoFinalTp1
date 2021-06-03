@@ -1,0 +1,103 @@
+<!DOCTYPE html >
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:iu="http://xmlns.jcp.org/jsf/facelets">
+<h:outputStylesheet name="style.css" library="css" />
+<h:outputStylesheet library="css" name="style.css" />
+<iu:composition template="/template.xhtml">
+	<iu:define name="conteudo">
+		<h:head>
+			<title>Consulta de usuários</title>
+
+		</h:head>
+		<h:form>
+			<h:body>
+				<h:messages style="color:blue;margin:8px;" id="message" />
+				<h:panelGroup id="pg2">
+					<h:column>
+						<h:commandButton value="Pesquisar"
+							actionListener="#{consultaUsuController.pesquisar}" />
+						<h:inputText value="#{consultaUsuController.filtro}" id="pesquisa">
+							<f:ajax execute="@this" render="data pesquisa" event="blur"
+								listener="#{consultaUsuController.voltarLista}" />
+						</h:inputText>
+					</h:column>
+
+					<h:dataTable value="#{consultaUsuController.listausu}" var="obj"
+						id="data">
+
+						<h:column>
+							<f:facet name="header">Id</f:facet>
+							<h:outputLabel value="#{obj.id}" />
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">Nome</f:facet>
+							<h:outputLabel value="#{obj.nome}" />
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">Email</f:facet>
+							<h:outputLabel value="#{obj.email}" />
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">login</f:facet>
+							<h:outputLabel value="#{obj.login}" />
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">Senha</f:facet>
+							<h:outputLabel value="#{obj.senha}" />
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">Cpf</f:facet>
+							<h:outputLabel value="#{obj.cpf}" />
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">Tipo</f:facet>
+							<h:outputLabel value="#{obj.tipo}" />
+						</h:column>
+
+
+
+						<h:column>
+
+							<h:commandButton value="Editar"
+								action="#{consultaUsuController.editar(obj)}"
+								disabled="#{templateController.limitador == false}">
+								<f:ajax execute="@this" render="@form:usuario @form:message" />
+							</h:commandButton>
+
+							<h:commandButton value="Remover"
+								actionListener="#{consultaUsuController.remover(obj)}"
+								disabled="#{templateController.limitador == false}">
+								<f:ajax execute="@form:pg2" render="@all" />
+							</h:commandButton>
+
+
+
+						</h:column>
+
+					</h:dataTable>
+
+
+				</h:panelGroup>
+
+
+			</h:body>
+
+		</h:form>
+
+
+
+
+	</iu:define>
+</iu:composition>
+
+</html>
