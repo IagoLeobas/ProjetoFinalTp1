@@ -13,7 +13,7 @@
 			<title>Consulta de usuários</title>
 
 		</h:head>
-		<h:form>
+		<h:form id="usuario">
 			<h:body>
 				<h:messages style="color:blue;margin:8px;" id="message" />
 				<h:panelGroup id="pg2">
@@ -77,7 +77,7 @@
 							<h:commandButton value="Remover"
 								actionListener="#{consultaUsuController.remover(obj)}"
 								disabled="#{templateController.limitador == false}">
-								<f:ajax execute="@form:pg2" render="@all" />
+								<f:ajax execute="@form:pg2" render="@form:usuario" />
 							</h:commandButton>
 
 

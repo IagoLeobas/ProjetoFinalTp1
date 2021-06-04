@@ -3,53 +3,100 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 <h:head>
+	<link
+		href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
+		rel="stylesheet" />
 	<meta charset="utf-8" name="viewport"
 		content="width=device-width, initial-scale=1"
 		http-equiv="X-UA-Conpatible" />
 	<h:outputStylesheet library="css" name="bootstrap.min.css" />
-	<h:outputStylesheet library="css" name="template.css"/>  
+	<h:outputStylesheet library="css" name="template.css" />
+	<h:outputStylesheet library="css" name="style.css" />
+
+
+
+	<div class="navbar navbar-dark bg-dark box-shadow">
+		<div class="container d-flex justify-content-between">
+			<a href="#" class="navbar-brand d-flex align-items-center">
+				<h1>CYBER PLACE</h1>
+				<div style="text-align: center;">
+					<h:form rendered="#{templateController.usuarioLogado != null}">
+						<h:outputLabel
+							value="Bem vindo #{templateController.usuarioLogado.nome}" />
+						<div>
+							<h:commandLink value=" (Sair)"
+								action="#{templateController.encerrarSessao}"
+								style="color:white" />
+						</div>
+					</h:form >
+				</div>
+			</a>
+		</div>
+	</div>
+	<h:form>
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">Menu</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item active">
+        <a class="nav-link" href="faces/login.xhtml?faces-redirect=true">Login</a>
+      </li>
+      <li class="nav-item">
+       	<h:commandLink styleClass="nav-link" value="Cadastro de Usuário" action="/faces/usuario.xhtml?faces-redirect=true" disabled="#{templateController.limitador == false}"/><br/>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="faces/consultausu.xhtml?faces-redirect=true">Consulta de Usuário</a>
+      </li>
+      <li class="nav-item">
+        <h:commandLink styleClass="nav-link" value="Cadastro de Produto" action="/faces/produto.xhtml?faces-redirect=true" disabled="#{templateController.limitador == false}"/><br/>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="faces/consultaprod.xhtml?faces-redirect=true">Consulta de Produto</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link disabled" href="faces/vendas.xhtml?faces-redirect=true">Vendas</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link disabled" href="faces/carrinho.xhtml?faces-redirect=true">Carrinho</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link disabled" href="faces/historico.xhtml?faces-redirect=true">Histórico de Vendas</a>
+      </li>
+    </ul>
+  </div>
+  
+</nav>
+</h:form>
 </h:head>
 
-<h:body>
-	 <div class="wrapper">
-	 	<div class="box navbar header">
-			<h1>CYBER PLACE</h1>
-			<div >
-				<h:form rendered="#{templateController.usuarioLogado != null}"> 
-					<h:outputLabel value="Olá #{templateController.usuarioLogado.nome}"/>
-					<h:commandLink value=" (Sair)"   
-						action="#{templateController.encerrarSessao}"
-						style="color:black"/>
-				</h:form>
-			</div>
-	 	</div>
-	 
-		<div class="box sidebar" style="text-align: center;">
-			<ui:insert name="menu">
-				<h1>Menu</h1>
-				<h:form>
-					<h:commandLink value="Login" action="/faces/login.xhtml?faces-redirect=true"/> <br/>
-					<h:commandLink value="Cadastro de Usuário" action="/faces/usuario.xhtml?faces-redirect=true" disabled="#{templateController.limitador == false}"/> <br/>
-					<h:commandLink value="Consulta de Usuários" action="/faces/consultausu.xhtml?faces-redirect=true"/> <br/>
-					<h:commandLink value="Cadastro de Produto" action="/faces/produto.xhtml?faces-redirect=true" disabled="#{templateController.limitador == false}"/> <br/>
-					<h:commandLink value="Consulta de Produtos" action="/faces/consultaprod.xhtml?faces-redirect=true"/> <br/>
-					<h:commandLink value="Vendas" action="/faces/vendas.xhtml?faces-redirect=true"/> <br/>
-					<h:commandLink value="Carrinho" action="/faces/carrinho.xhtml?faces-redirect=true"/>  <br/>
-					<h:commandLink value="Histórico de Venda" action="/faces/historico.xhtml?faces-redirect=true"/>  <br/>
-						
-				</h:form>
-			</ui:insert>
-		</div>
-		<div class="box content">
-			<br/>
+
+<section class="jumbotron text-center">
+	<div class="container">
+		<p>
+		<div class="box content" align="center">
+			<br />
 			<ui:insert name="conteudo">
 				<div align="center">
 					<h1>MUNDO DA INFORMÁTICA</h1>
 				</div>
 			</ui:insert>
 		</div>
+		</p>
+
+	</div>
+</section>
+
+<h:body>
+	<div class="wrapper">
+
+		
+		
 		<div class="box footer" style="text-align: center;">
-			<h:outputText value="2021 - CyberPlace - Todos os direitos reservados." />
+			<h:outputText
+				value="2021 - CyberPlace - Todos os direitos reservados." />
 		</div>
 	</div>
 </h:body>

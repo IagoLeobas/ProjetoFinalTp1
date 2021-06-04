@@ -13,7 +13,7 @@
 	<title>Consulta de produtos</title>
 
 </h:head>
-	<h:form>
+	<h:form id="produto">
 	<h:body>
 		 <h:messages id="message" style="color:blue;margin:8px;"/>
 		 	<h:panelGroup id="pg2"> 
@@ -70,7 +70,7 @@
 			 			</h:commandButton>
 			 			
 						<h:commandButton value="Remover" actionListener="#{consultaProdController.remover(obj)}" disabled="#{templateController.limitador == false}">
-							<f:ajax execute="@form:pg2" render="@form:pg2 @form:message"  />
+							<f:ajax execute="@form:pg2" render="@form:produto"  />
 			 			</h:commandButton>
 							
 						

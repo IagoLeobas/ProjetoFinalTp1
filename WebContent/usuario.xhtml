@@ -47,7 +47,7 @@
 		 	
 		    <h:panelGroup id="comandos">
 			 	<h:commandButton value="adicionar" actionListener="#{usuarioController.adicionar}">
-			 		<f:ajax execute="@all" render="@all"  />
+			 		<f:ajax execute="usuario" render="data pg1 message"   />
 			 	</h:commandButton>
 			 	
 			 	<h:commandButton value="alterar" actionListener="#{usuarioController.alterar}" rendered="#{usuarioController.ativador}">
