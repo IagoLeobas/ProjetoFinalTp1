@@ -30,3 +30,19 @@
 	text-align:center;
 	background-color:#cccccc;
 }
+
+.compra{
+	
+	border-radius:4%;
+	height:35px;
+	background-color:green;
+	color:white;
+	border:none;
+}
+
+.compra:hover{
+	
+	transition:0.5s;
+	background-color:#004d00;
+	
+}

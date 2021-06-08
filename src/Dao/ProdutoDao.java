@@ -295,6 +295,140 @@ public class ProdutoDao implements Dao{
 		return p;
 	}
 	
+	
+	public static List<Produto> obterPelaCategoria(String filtro) {
+		
+		Connection con = Dao.getConnection();
+		List<Produto> listaprod = new ArrayList<Produto>();
+		
+	    StringBuffer sql = new StringBuffer();
+	    
+	    sql.append("SELECT ");
+	    sql.append("  idprod, ");
+		sql.append("  produto, ");
+		sql.append("  marca, ");
+		sql.append("  descricao, ");
+		sql.append("  origem, ");
+		sql.append("  categoria, ");
+		sql.append("  preco ");
+		sql.append("FROM produto ");
+		sql.append("WHERE ");
+		sql.append("categoria = ");
+		sql.append("'"+filtro+"'");
+		
+		PreparedStatement stat = null;
+		
+		
+		try {
+		
+			
+			stat =  con.prepareStatement(sql.toString());
+			ResultSet rs = stat.executeQuery();
+			
+			while(rs.next()) {
+				Produto p = new Produto();
+				p.setId(rs.getInt("idprod"));
+				p.setProduto(rs.getString("produto"));
+				p.setMarca(rs.getString("marca"));
+				p.setDescricao(rs.getString("descricao"));
+				p.setOrigem(achaOrigem(rs.getString("origem")));
+				p.setCategoria(achaCategoria(rs.getString("categoria")));
+				p.setPreco(rs.getFloat("preco"));
+				
+				listaprod.add(p);
+				
+				
+				
+			}
+			
+			
+			
+		} catch (SQLException e) {
+			Util.addErrorMessage("Produto não encontrados");
+			e.printStackTrace();
+			return null;
+		}
+		return listaprod;
+		
+		
+
+		
+	}
+	
+	
+	public static List<Produto> obterPeloNome(String filtro){
+		
+		Connection con = Dao.getConnection();
+		List<Produto> listaprod = new ArrayList<Produto>();
+		
+		StringBuffer sql = new StringBuffer();
+		
+		 sql.append("SELECT ");
+		    sql.append("  idprod, ");
+			sql.append("  produto, ");
+			sql.append("  marca, ");
+			sql.append("  descricao, ");
+			sql.append("  origem, ");
+			sql.append("  categoria, ");
+			sql.append("  preco ");
+			sql.append("FROM produto ");
+			sql.append("WHERE ");
+			sql.append("produto = ");
+			sql.append("'"+filtro+"'");
+			
+			PreparedStatement stat = null;
+			
+			
+			try {
+			
+				
+				stat =  con.prepareStatement(sql.toString());
+				ResultSet rs = stat.executeQuery();
+				
+				while(rs.next()) {
+					Produto p = new Produto();
+					p.setId(rs.getInt("idprod"));
+					p.setProduto(rs.getString("produto"));
+					p.setMarca(rs.getString("marca"));
+					p.setDescricao(rs.getString("descricao"));
+					p.setOrigem(achaOrigem(rs.getString("origem")));
+					p.setCategoria(achaCategoria(rs.getString("categoria")));
+					p.setPreco(rs.getFloat("preco"));
+					
+					listaprod.add(p);
+					
+					
+					
+				}
+				
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+				return null;
+			}
+			return listaprod;
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 		
 		
