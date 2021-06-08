@@ -6,7 +6,7 @@ import java.util.List;
 public class Venda {
 	private Integer id;
 	private LocalDate data;
-	private Double total;
+	private float total;
 	private Usuario usuario;
 	private List<ItemVenda> listaIv;
 
@@ -26,12 +26,12 @@ public class Venda {
 		this.data = data;
 	}
 
-	public Double getTotal() {
+	public float getTotal() {
 		return total;
 	}
 
-	public void setTotalVenda(Double totalVenda) {
-		this.total = totalVenda;
+	public void setTotal(float total) {
+		this.total = total;
 	}
 
 	public Usuario getUsuario() {

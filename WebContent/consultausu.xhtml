@@ -67,17 +67,19 @@
 
 
 						<h:column>
-
+							<f:facet name="header">Ação</f:facet>
 							<h:commandButton value="Editar"
 								action="#{consultaUsuController.editar(obj)}"
 								disabled="#{templateController.limitador == false}">
 								<f:ajax execute="@this" render="@form:usuario @form:message" />
+								
 							</h:commandButton>
 
 							<h:commandButton value="Remover"
 								actionListener="#{consultaUsuController.remover(obj)}"
 								disabled="#{templateController.limitador == false}">
 								<f:ajax execute="@form:pg2" render="@form:usuario" />
+								
 							</h:commandButton>
 
 

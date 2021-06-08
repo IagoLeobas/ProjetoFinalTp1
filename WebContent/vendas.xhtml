@@ -4,97 +4,99 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:jsf="http://xmlns.jcp.org/jsf">
-	
+
 <ui:composition template="template.xhtml">
-<ui:define name="conteudo">
-	
-	<!-- Container -->
-	<div class="container-fluid">
-		<div class="row justify-content-md-center">
-			<div class="col-md-6 col-md-auto login-box">		
- 				<h:messages 
-					errorStyle="color:blue" 
-					warnStyle="color:orange" 
-					infoStyle="color:green"
-					globalOnly="false"/>
-					
-				<div class="form-row">
-				 	<div class="form-group col-md-12">
-				 		<h1 class="text-center wdi-red">Vendas</h1>
-				    </div>
-				</div>		
-				<hr />
-				<h:form>
+	<ui:define name="conteudo">
+
+		<!-- Container -->
+		<div class="container-fluid">
+			<div class="row justify-content-md-center">
+				<div class="col-md-6 col-md-auto login-box">
+					<h:messages errorStyle="color:blue" warnStyle="color:orange"
+						infoStyle="color:green" globalOnly="false" />
+
 					<div class="form-row">
-					 	<div class="form-group col-md-4">
-					 		
-					      	<h:selectOneMenu styleClass="form-control" 
-								value="#{vendaController.tipoFiltro}" id="categoria">
-								<f:selectItem itemValue="1" itemLabel="Nome" /> 
-							   <f:selectItem itemValue="2" itemLabel="Categoria" /> 
-							   <f:selectItem itemValue="3" itemLabel="Todos" />  
-							   <f:ajax execute="@this pesquisa" render="@form"/>                  
-							</h:selectOneMenu>
-					    </div>
-					    <div class="form-group col-md-6">
-					     	<input type="text" class="form-control" 
-					     		placeholder="Pesquisa"
-								jsf:value="#{vendaController.filtro}" rendered="#{vendaController.tipoFiltro != 3}" id="pesquisa"/>
-					
-					    </div>
-					    <div class="form-group col-md-2">
-					      <h:commandButton value="Pesquisar"
-					     		class="btn btn-primary"
-								actionListener="#{vendaController.pesquisar}" />
-					    </div>
+						<div class="form-group col-md-12">
+							<h1 class="text-center wdi-red">Vendas</h1>
+						</div>
 					</div>
-				</h:form>
+					<hr />
+					<h:form>
+						<div class="form-row">
+							<div class="form-group col-md-4">
+
+								<h:selectOneMenu styleClass="form-control"
+									value="#{vendaController.tipoFiltro}" id="categoria">
+									<f:selectItem itemValue="1" itemLabel="Nome" />
+									<f:selectItem itemValue="2" itemLabel="Categoria" />
+									<f:selectItem itemValue="3" itemLabel="Todos" />
+									<f:ajax execute="@this pesquisa" render="@form" />
+								</h:selectOneMenu>
+							</div>
+							<div class="form-group col-md-6">
+								<input type="text" class="form-control" placeholder="Pesquisa"
+									jsf:value="#{vendaController.filtro}"
+									rendered="#{vendaController.tipoFiltro != 3}" id="pesquisa" />
+
+							</div>
+							<div class="form-group col-md-2">
+								<h:commandButton value="Pesquisar" class="btn btn-primary"
+									actionListener="#{vendaController.pesquisar}" />
+							</div>
+						</div>
+					</h:form>
 					<h:form id="formDataTable">
-							<h:dataTable id="dataTable" 
-										class="table table-striped table-hover"
-										value="#{vendaController.listaProduto}" 
-									 	var="obj">
-							   
-		 			<h:column> 
-			 			<f:facet name="header">Produto</f:facet>
-			 			<h:outputLabel value="#{obj.produto}"/>
-		 			</h:column>
-		 			
-		 			<h:column> 
-			 			<f:facet name="header">Descrição</f:facet>
-			 			<h:outputLabel value="#{obj.descricao}"/>
-		 			</h:column>
-		 			
-		 			<h:column> 
-			 			<f:facet name="header">Marca</f:facet>
-			 			<h:outputLabel value="#{obj.marca}"/>
-		 			</h:column>
-		 			
-		 			<h:column> 
-			 			<f:facet name="header">Origem</f:facet>
-			 			<h:outputLabel value="#{obj.origem}"/>
-		 			</h:column>
-		 			
-		 			<h:column> 
-			 			<f:facet name="header">Categoria</f:facet>
-			 			<h:outputLabel value="#{obj.categoria}"/>
-		 			</h:column>
-		 			
-		 			<h:column> 
-			 			<f:facet name="header">Preço</f:facet>
-			 			<h:outputLabel value="#{obj.preco}"/>
-		 			</h:column>
-		 		
-		 			<h:column>
-		 				<h:commandButton value="Adicionar ao carrinho"  styleClass="compra"  />
-		 			</h:column>
-							  
+						<h:dataTable id="dataTable"
+							class="table table-striped table-hover"
+							value="#{vendaController.listaProduto}" var="obj">
+
+							
+							<h:column>
+								<img src="https://triunfo.pe.gov.br/pm_tr430/wp-content/uploads/2018/03/sem-foto.jpg" width="100px"/>
+							</h:column>
+							
+							<h:column>
+								<f:facet name="header">Produto</f:facet>
+								<h:outputLabel value="#{obj.produto}" />
+							</h:column>
+							
+							<h:column>
+								<f:facet name="header">Descrição</f:facet>
+								<h:outputLabel value="#{obj.descricao}" />
+							</h:column>
+
+							<h:column>
+								<f:facet name="header">Marca</f:facet>
+								<h:outputLabel value="#{obj.marca}" />
+							</h:column>
+
+							<h:column>
+								<f:facet name="header">Origem</f:facet>
+								<h:outputLabel value="#{obj.origem}" />
+							</h:column>
+
+							<h:column>
+								<f:facet name="header">Categoria</f:facet>
+								<h:outputLabel value="#{obj.categoria}" />
+							</h:column>
+
+							<h:column>
+								<f:facet name="header">Preço(R$)</f:facet>
+								<h:outputLabel value="#{obj.preco}" />
+							</h:column>
+
+							<h:column>
+								<h:commandButton value="Adicionar ao carrinho"
+									styleClass="compra"
+									action="#{vendaController.addCarrinho(obj)}" />
+							</h:column>
+
 						</h:dataTable>
-				</h:form>
+					</h:form>
+				</div>
 			</div>
 		</div>
-	</div>
 
-</ui:define>	
+	</ui:define>
 </ui:composition>
 </html>
