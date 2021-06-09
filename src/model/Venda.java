@@ -8,7 +8,7 @@ public class Venda {
 	private LocalDate data;
 	private float total;
 	private Usuario usuario;
-	private List<ItemVenda> listaIv;
+	private List<ItemVenda> listaItemVenda;
 
 	public Integer getId() {
 		return id;
@@ -43,10 +43,12 @@ public class Venda {
 	}
 
 	public List<ItemVenda> getListaItemVenda() {
-		return listaIv;
+		return listaItemVenda;
 	}
 
-	public void setListaItemVenda(List<ItemVenda> listaIv) {
-		this.listaIv = listaIv;
+	public void setListaItemVenda(List<ItemVenda> listaItemVenda) {
+		this.listaItemVenda = listaItemVenda;
 	}
+
+	
 }

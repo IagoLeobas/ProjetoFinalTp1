@@ -129,9 +129,10 @@ public class VendaDao implements Dao {
 
 		StringBuffer sql = new StringBuffer();
 		sql.append("SELECT ");
-		sql.append("  v.id, ");
+		sql.append("  v.idvenda, ");
 		sql.append("  v.data, ");
-		sql.append("  v.idusuario ");
+		sql.append("  v.idusuario, ");
+		sql.append("  v.total ");
 		sql.append("FROM ");
 		sql.append("  venda v ");
 		sql.append("WHERE ");
@@ -146,10 +147,13 @@ public class VendaDao implements Dao {
 
 			while (rs.next()) {
 				Venda venda = new Venda();
-				venda.setId(rs.getInt("id"));
+				venda.setId(rs.getInt("idvenda"));
+				venda.setTotal(rs.getFloat("total"));
 				venda.setData(rs.getDate("data").toLocalDate());
 				venda.setUsuario(usuario);
 				venda.setListaItemVenda(obterItensVenda(venda));
+				
+				System.out.println(venda.getId());
 
 				listaVenda.add(venda);
 			}
@@ -186,6 +190,7 @@ public class VendaDao implements Dao {
 		sql.append("  i.idvenda, ");
 		sql.append("  i.quantidade, ");
 		sql.append("  i.valorunit, ");
+		sql.append("  p.idprod, ");
 		sql.append("  p.produto, ");
 		sql.append("  p.descricao, ");
 		sql.append("  p.categoria, ");
@@ -196,7 +201,7 @@ public class VendaDao implements Dao {
 		sql.append("  itemvenda i, ");
 		sql.append("  produto p ");
 		sql.append("WHERE ");
-		sql.append("  i.idprod = p.id ");
+		sql.append("  p.idprod = i.iditem ");
 		sql.append("  AND i.idvenda = ? ");
 
 		PreparedStatement stat = null;
@@ -208,17 +213,17 @@ public class VendaDao implements Dao {
 
 			while (rs.next()) {
 				ItemVenda item = new ItemVenda();
-				item.setId(rs.getInt("id"));
+				item.setId(rs.getInt("iditem"));
 				item.setQuantidade(rs.getInt("quantidade"));
-				item.setValorUnitario(rs.getDouble("valor_unitario"));
+				item.setValorUnitario(rs.getDouble("valorunit"));
 				item.setProduto(new Produto());
-				item.getProduto().setId(rs.getInt("id_produto"));
+				item.getProduto().setId(rs.getInt("idprod"));
 				item.getProduto().setProduto(rs.getString("produto"));
 				item.getProduto().setDescricao(rs.getString("descricao"));
-				item.getProduto().setCategoria(achaCategoria(rs.getInt("categoria")));
+				item.getProduto().setCategoria(achaCategoria(rs.getString("categoria")));
 				item.getProduto().setPreco(rs.getFloat("preco"));
 				item.getProduto().setMarca(rs.getString("marca"));
-				item.getProduto().setOrigem(achaOrigem(rs.getInt("origem")));
+				item.getProduto().setOrigem(achaOrigem(rs.getString("origem")));
 
 				listaItem.add(item);
 			}
@@ -244,32 +249,32 @@ public class VendaDao implements Dao {
 		return listaItem;
 	}
 
-	public static Categoria achaCategoria(int categoria) {
+	public static Categoria achaCategoria(String categoria) {
 
-		if (categoria == Categoria.MEMORIA.getId())
+		if (categoria == Categoria.MEMORIA.getLabel())
 			return Categoria.MEMORIA;
-		else if (categoria == Categoria.GABINETE.getId())
+		else if (categoria == Categoria.GABINETE.getLabel())
 			return Categoria.GABINETE;
-		else if (categoria == Categoria.CPU.getId())
+		else if (categoria == Categoria.CPU.getLabel())
 			return Categoria.CPU;
-		else if (categoria == Categoria.GPU.getId())
+		else if (categoria == Categoria.GPU.getLabel())
 			return Categoria.GPU;
-		else if (categoria == Categoria.PLACA_MAE.getId())
+		else if (categoria == Categoria.PLACA_MAE.getLabel())
 			return Categoria.PLACA_MAE;
-		else if (categoria == Categoria.SOM.getId())
+		else if (categoria == Categoria.SOM.getLabel())
 			return Categoria.SOM;
-		else if (categoria == Categoria.MONITOR.getId())
+		else if (categoria == Categoria.MONITOR.getLabel())
 			return Categoria.MONITOR;
-		else if (categoria == Categoria.PERIFERICOS.getId())
+		else if (categoria == Categoria.PERIFERICOS.getLabel())
 			return Categoria.PERIFERICOS;
 		return null;
 	}
 
-	public static Origem achaOrigem(int origem) {
+	public static Origem achaOrigem(String origem) {
 
-		if (origem == Origem.IMPORTADO.getId())
+		if (origem == Origem.IMPORTADO.getLabel())
 			return Origem.IMPORTADO;
-		else if (origem == Origem.NACIONAL.getId())
+		else if (origem == Origem.NACIONAL.getLabel())
 			return Origem.NACIONAL;
 		return null;
 	}

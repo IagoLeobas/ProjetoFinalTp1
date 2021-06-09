@@ -45,16 +45,16 @@
         <a class="nav-link" href="faces/login.xhtml?faces-redirect=true">Login</a>
       </li>
       <li class="nav-item">
-       	<h:commandLink styleClass="nav-link" value="Cadastro de Usuário" action="/faces/usuario.xhtml?faces-redirect=true" disabled="#{templateController.limitador == false}"/><br/>
+       	<h:commandLink styleClass="nav-link" value="Cadastro de Usuário" action="/faces/usuario.xhtml?faces-redirect=true" rendered="#{templateController.usuarioLogado.tipo.id == 1}"/><br/>
       </li>
       <li class="nav-item">
-      	<h:commandLink styleClass="nav-link" value="Consulta de Usuário" action="faces/consultausu.xhtml?faces-redirect=true"/><br/>
+      	<h:commandLink styleClass="nav-link" value="Consulta de Usuário" action="faces/consultausu.xhtml?faces-redirect=true" rendered="#{templateController.usuarioLogado.tipo.id == 1}"/><br/>
       </li>
       <li class="nav-item">
-        <h:commandLink styleClass="nav-link" value="Cadastro de Produto" action="/faces/produto.xhtml?faces-redirect=true" disabled="#{templateController.limitador == false}"/><br/>
+        <h:commandLink styleClass="nav-link" value="Cadastro de Produto" action="/faces/produto.xhtml?faces-redirect=true" rendered="#{templateController.usuarioLogado.tipo.id == 1}"/><br/>
       </li>
       <li class="nav-item">
-      <h:commandLink styleClass="nav-link" value="Consulta de Produto" action="faces/consultaprod.xhtml?faces-redirect=true"/><br/>
+      <h:commandLink styleClass="nav-link" value="Consulta de Produto" action="faces/consultaprod.xhtml?faces-redirect=true" rendered="#{templateController.usuarioLogado.tipo.id == 1}"/><br/>
       </li>
       <li class="nav-item">
       <h:commandLink styleClass="nav-link" value="Vendas" action="faces/vendas.xhtml?faces-redirect=true"/><br/>
