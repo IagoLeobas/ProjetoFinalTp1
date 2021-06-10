@@ -3,7 +3,8 @@ package model;
 public enum TipoU {
 	
 	ADM(1,"administrador"),
-	FUNCIONARIO(2,"funcionario");
+	FUNCIONARIO(2,"funcionario"),
+	CLIENTE(3,"Cliente");
 	
 	private int id;
 	private String label;

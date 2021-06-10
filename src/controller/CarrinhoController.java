@@ -62,7 +62,7 @@ public class CarrinhoController implements Serializable {
 
 		for (int i = 0; i < lista.size(); i++) {
 
-			tot += lista.get(i).getValorUnitario();
+			tot += lista.get(i).getValorUnitario() * lista.get(i).getQuantidade();
 
 		}
 
