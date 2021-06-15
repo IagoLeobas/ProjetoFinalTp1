@@ -46,9 +46,11 @@
 									</h:selectOneRadio>
 								</div>
 								<div id="register-link" class="text-right">
-									<h:commandButton value="Entrar" action="#{loginController.logar}" styleClass="btn btn-info btn-md" />
-
-
+									<h:commandButton value="Entrar" action="#{loginController.logar}" styleClass="btn btn-info btn-md" /><br/>
+										
+									<h:commandLink  value="Cadastre-se"  action="cadastro.xhtml?faces-redirect=true" >
+										<f:ajax  execute="@this" render="@this"/>
+									</h:commandLink>
 								</div>
 							
 						</div>

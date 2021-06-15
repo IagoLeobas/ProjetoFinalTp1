@@ -48,13 +48,13 @@
        	<h:commandLink styleClass="nav-link" value="Cadastro de Usuário" action="/faces/usuario.xhtml?faces-redirect=true" rendered="#{templateController.usuarioLogado.tipo.id == 1}"/><br/>
       </li>
       <li class="nav-item">
-      	<h:commandLink styleClass="nav-link" value="Consulta de Usuário" action="faces/consultausu.xhtml?faces-redirect=true" rendered="#{templateController.usuarioLogado.tipo.id == 1}"/><br/>
+      	<h:commandLink styleClass="nav-link" value="Consulta de Usuário" action="faces/consultausu.xhtml?faces-redirect=true" rendered="#{templateController.usuarioLogado.tipo.id == 1 || templateController.usuarioLogado.tipo.id == 2}"/><br/>
       </li>
       <li class="nav-item">
         <h:commandLink styleClass="nav-link" value="Cadastro de Produto" action="/faces/produto.xhtml?faces-redirect=true" rendered="#{templateController.usuarioLogado.tipo.id == 1}"/><br/>
       </li>
       <li class="nav-item">
-      <h:commandLink styleClass="nav-link" value="Consulta de Produto" action="faces/consultaprod.xhtml?faces-redirect=true" rendered="#{templateController.usuarioLogado.tipo.id == 1}"/><br/>
+      <h:commandLink styleClass="nav-link" value="Consulta de Produto" action="faces/consultaprod.xhtml?faces-redirect=true" rendered="#{templateController.usuarioLogado.tipo.id == 1 || templateController.usuarioLogado.tipo.id == 2}"/><br/>
       </li>
       <li class="nav-item">
       <h:commandLink styleClass="nav-link" value="Vendas" action="faces/vendas.xhtml?faces-redirect=true"/><br/>
@@ -93,11 +93,12 @@
 	<div class="wrapper">
 
 		
-		
+		<footer>
 		<div class="box footer" style="text-align: center;">
 			<h:outputText
 				value="2021 - CyberPlace - Todos os direitos reservados." />
 		</div>
+		</footer>
 	</div>
 </h:body>
 </html>

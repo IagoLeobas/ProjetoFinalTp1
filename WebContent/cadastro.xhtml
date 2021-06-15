@@ -1,0 +1,96 @@
+<!DOCTYPE html >
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:iu="http://xmlns.jcp.org/jsf/facelets">
+<h:head>
+	<h:outputStylesheet library="css" name="bootstrap.min.css" />
+	<h:outputStylesheet library="css" name="template.css" />
+	<h:outputStylesheet library="css" name="style.css" />
+
+
+	<title>cadastro</title>
+
+</h:head>
+
+<h:body >
+
+<div id="body-cad">
+	<div class="navbar navbar-dark bg-dark box-shadow">
+		<div class="container d-flex justify-content-between">
+			<a href="#" class="navbar-brand d-flex align-items-center">
+				<h1>CYBER PLACE</h1>
+				<div style="text-align: center;">
+
+					<h:outputLabel value="Bem vindo" />
+					<h:form>
+						<div>
+							<h:commandLink value=" (voltar)"
+								action="login.xhtml?faces-redirect=true" style="color:white" />
+						</div>
+					</h:form>
+				</div>
+			</a>
+		</div>
+	</div>
+
+	<div id="cad">
+		<h1>Cadastre-se</h1>
+		<h:messages style="color:blue;margin:8px;" id="message" />
+		<h:form id="cadastro">
+
+
+			<h:panelGrid columns="2" id="pg1">
+
+				<h:outputLabel value="Nome" />
+				<h:inputText value="#{cadastroController.usu.nome}" />
+
+				<h:outputLabel value="Email" />
+				<h:inputText value="#{cadastroController.usu.email}" />
+
+				<h:outputLabel value="Login" />
+				<h:inputText value="#{cadastroController.usu.login}" />
+
+				<h:outputLabel value="senha" />
+				<h:inputText value="#{cadastroController.usu.senha}" />
+
+				<h:outputLabel value="Cpf" />
+				<h:inputText value="#{cadastroController.usu.cpf}" />
+
+
+			</h:panelGrid>
+
+			<h:panelGroup id="comandos">
+				<h:commandButton value="adicionar"
+					action="#{cadastroController.adicionar}">
+					<f:ajax execute="cadastro" render="data pg1 message" />
+				</h:commandButton>
+
+				<h:commandButton value="limpar"
+					actionListener="#{cadastroController.limpar}">
+					<f:ajax execute="@this" render="pg1 message" />
+				</h:commandButton>
+
+			</h:panelGroup>
+
+
+		</h:form>
+	</div>
+	</div>
+	</h:body>
+	<div class="wrapper">
+
+
+
+		<div class="box footer" style="text-align: center;">
+			<h:outputText
+				value="2021 - CyberPlace - Todos os direitos reservados." />
+		</div>
+	</div>
+
+<h:outputScript library="javax.faces" name="jsf.js" target="head" />
+
+
+</html>

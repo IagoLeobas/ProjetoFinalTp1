@@ -30,7 +30,7 @@
 				
 				
 				<h:outputLabel value="ORIGEM"  />
-			    <h:selectOneRadio value="#{produtoController.prod.origem}">
+			    <h:selectOneRadio value="#{produtoController.prod.caracteristica.origem}">
 			    	<f:selectItems value="#{produtoController.origem}" var="obj" itemLabel="#{obj}"/>
 			    </h:selectOneRadio>
 			    
@@ -38,7 +38,7 @@
 				<h:inputText value="#{produtoController.prod.preco}"/>
 				
 				<h:outputLabel value="Categoria"  />
-				 <h:selectOneMenu value="#{produtoController.prod.categoria}">
+				 <h:selectOneMenu value="#{produtoController.prod.caracteristica.categoria}">
 			    	<f:selectItems value="#{produtoController.categoria}" var="obj" itemLabel="#{obj}"/>
 			    </h:selectOneMenu>
 				
