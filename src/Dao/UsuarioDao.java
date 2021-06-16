@@ -73,7 +73,7 @@ public class UsuarioDao implements Dao {
 		return usuarioLogado;		
 	}
 	
-	public static void adicionar(Usuario usu) {
+	public static boolean adicionar(Usuario usu) {
 		
 		Connection con = Dao.getConnection();
 		
@@ -103,9 +103,12 @@ public class UsuarioDao implements Dao {
 				usu.setId(rs.getInt("id"));
 			}
 			Util.addErrorMessage("Usuário inserido com sucesso!");
+			return true;
 		} catch (SQLException e) {
+			
 			Util.addErrorMessage("Problema ao inserir usuário.");
 			e.printStackTrace();
+			return false;
 		}
 		
 		
@@ -296,6 +299,8 @@ public class UsuarioDao implements Dao {
 			return TipoU.ADM;
 		else if(tipo == TipoU.FUNCIONARIO.getId())
 			return TipoU.FUNCIONARIO;
+		else if(tipo == TipoU.CLIENTE.getId())
+			return TipoU.CLIENTE;
 		return null;	
 
 			

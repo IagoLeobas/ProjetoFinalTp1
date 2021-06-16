@@ -9,10 +9,10 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.Categoria;
 import model.ItemVenda;
 import model.Origem;
 import model.Produto;
-import model.Categoria;
 import model.Usuario;
 import model.Venda;
 
@@ -62,9 +62,6 @@ public class VendaDao implements Dao {
 			salvarItens(obj, con);
 			
 			
-			
-
-			// salvando por definitivo no banco
 			con.commit();
 
 		} catch (SQLException e) {
@@ -95,7 +92,7 @@ public class VendaDao implements Dao {
 	}
 
 	private void salvarItens(Venda venda, Connection conn) throws SQLException {
-		// salvando os itens de venda
+	
 		StringBuffer sql = new StringBuffer();
 		sql.append("INSERT INTO itemvenda ");
 		sql.append(" (quantidade, valorunit, iditem, idvenda) ");
@@ -112,8 +109,6 @@ public class VendaDao implements Dao {
 
 			stat.execute();
 
-			// o janio faria com o dao de produto
-			// atualizandoEstoque(item.getProduto(), item.getQuantidade(), conn);
 		}
 
 	}
@@ -153,7 +148,6 @@ public class VendaDao implements Dao {
 				venda.setUsuario(usuario);
 				venda.setListaItemVenda(obterItensVenda(venda));
 				
-				System.out.println(venda.getId());
 
 				listaVenda.add(venda);
 			}
@@ -220,10 +214,10 @@ public class VendaDao implements Dao {
 				item.getProduto().setId(rs.getInt("idprod"));
 				item.getProduto().setProduto(rs.getString("produto"));
 				item.getProduto().setDescricao(rs.getString("descricao"));
-				item.getProduto().setCategoria(achaCategoria(rs.getString("categoria")));
+				item.getProduto().getCaracteristica().setCategoria(achaCategoria(rs.getString("categoria")));
 				item.getProduto().setPreco(rs.getFloat("preco"));
 				item.getProduto().setMarca(rs.getString("marca"));
-				item.getProduto().setOrigem(achaOrigem(rs.getString("origem")));
+				item.getProduto().getCaracteristica().setOrigem(achaOrigem(rs.getString("origem")));
 
 				listaItem.add(item);
 			}
@@ -280,13 +274,13 @@ public class VendaDao implements Dao {
 	}
 	
 	
-	public float somaVal(Connection con,int id) {
+	public float somaVal(Connection con,int id, Venda venda) {
 		
 		float val = 0;
 		
 		StringBuffer sql = new StringBuffer();
 		
-		sql.append(" SELECT valorunit ");
+		sql.append(" SELECT valorunit,quantidade ");
 		sql.append(" FROM ");
 		sql.append(" itemvenda ");
 		sql.append(" WHERE idvenda = ");
@@ -300,7 +294,9 @@ public class VendaDao implements Dao {
 			
 			while(rs.next()) {
 				
-				val += rs.getFloat("valorunit");
+				int quant = rs.getInt("quantidade");
+				val += rs.getFloat("valorunit") * quant;
+				
 				
 			}
 			
@@ -317,7 +313,7 @@ public class VendaDao implements Dao {
 		
 	}
 	
-	public void insereVal(int id) {
+	public void insereVal(Venda venda) {
 		
 		Connection con = Dao.getConnection();		
 		
@@ -326,7 +322,7 @@ public class VendaDao implements Dao {
 		sql.append(" UPDATE venda ");
 		sql.append(" SET total = ? ");
 		sql.append(" WHERE idvenda = ");
-		sql.append(id);
+		sql.append(venda.getId());
 		
 		
 		PreparedStatement stat = null;
@@ -334,7 +330,7 @@ public class VendaDao implements Dao {
 		
 		try {
 			stat = con.prepareStatement(sql.toString());
-			stat.setFloat(1,somaVal(con,id));
+			stat.setFloat(1,somaVal(con,venda.getId(),venda));
 
 			stat.execute();
 			

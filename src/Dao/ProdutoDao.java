@@ -3,10 +3,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 import Application.Util;
+import model.Caracteristica;
 import model.Categoria;
 import model.Origem;
 import model.Produto;
@@ -19,23 +21,28 @@ public class ProdutoDao implements Dao{
 		
 		StringBuffer sql = new StringBuffer();
 		sql.append("INSERT INTO produto ");
-		sql.append(" (produto,marca,descricao,origem,categoria,preco) ");
+		sql.append(" (produto,marca,descricao,preco) ");
 		sql.append("VALUES ");
-		sql.append(" (?, ?, ?, ?, ?, ?) ");
+		sql.append(" (?, ?, ?, ?) ");
 		
 		
 		PreparedStatement stat = null;
 		try {
 			
 			
-			stat = con.prepareStatement(sql.toString());
+			stat = con.prepareStatement(sql.toString(), Statement.RETURN_GENERATED_KEYS);
 			stat.setString(1, p.getProduto());
 			stat.setString(2, p.getMarca());
 			stat.setString(3, p.getDescricao());
-			stat.setString(4, p.getOrigem().getLabel());
-			stat.setString(5, p.getCategoria().getLabel());
-			stat.setFloat(6, p.getPreco());
+			stat.setFloat(4, p.getPreco());
 			stat.execute();
+		
+			
+			ResultSet rs = stat.getGeneratedKeys();
+			if (rs.next()) {
+				p.getCaracteristica().setId(rs.getInt("idprod"));
+				
+			}
 			
 			Util.addErrorMessage("Produto inserido com sucesso!");
 		} catch (SQLException e) {
@@ -71,6 +78,7 @@ public class ProdutoDao implements Dao{
 			try {
 				PreparedStatement stat = con.prepareStatement(sql.toString());
 				stat.execute();
+				CaracteristicaDao.remover(p);
 				Util.addErrorMessage("Produto removido com sucesso!");
 			} catch (SQLException e) {
 				Util.addErrorMessage("Problema ao remover o produto.");
@@ -100,9 +108,21 @@ public class ProdutoDao implements Dao{
 		List<Produto> listaproduto = new ArrayList<Produto>();
 		
 		StringBuffer sql = new StringBuffer();
-		sql.append("SELECT * ");
-		sql.append(" FROM ");
-		sql.append(" produto ");
+		sql.append("SELECT ");
+		sql.append("  p.idprod, ");
+		sql.append("  p.produto, ");
+		sql.append("  p.marca, ");
+		sql.append("  p.descricao, ");
+		sql.append("  p.preco, ");
+		sql.append("  c.idcara, ");
+		sql.append("  c.origem, ");
+		sql.append("  c.categoria ");
+		sql.append("FROM ");
+		sql.append("  produto p, ");
+		sql.append("  caracteristica c ");
+		sql.append("WHERE ");
+		sql.append("  p.idprod = c.idcara ");
+		
 		
 		
 		
@@ -119,10 +139,14 @@ public class ProdutoDao implements Dao{
 				produto.setProduto(rs.getString("produto"));
 				produto.setMarca(rs.getString("marca"));
 				produto.setDescricao(rs.getString("descricao"));
-				produto.setOrigem(achaOrigem(rs.getString("origem")));
-				produto.setCategoria(achaCategoria(rs.getString("categoria")));
 				produto.setPreco(rs.getFloat("preco"));
 				
+				produto.setCaracteristica(new Caracteristica());
+				produto.getCaracteristica().setId(rs.getInt("idcara"));
+				produto.getCaracteristica().setCategoria(achaCategoria(rs.getString("categoria")));
+				produto.getCaracteristica().setOrigem(achaOrigem(rs.getString("origem")));
+				
+				System.out.println(produto.getCaracteristica());
 				listaproduto.add(produto);
 			}
 				
@@ -194,8 +218,6 @@ public class ProdutoDao implements Dao{
 		sql.append(" produto = ?, ");
 		sql.append(" marca = ?, ");
 		sql.append(" descricao = ?, ");
-		sql.append(" origem = ?, ");
-		sql.append(" categoria = ?, ");
 		sql.append(" preco = ? ");
 		sql.append("WHERE ");
 		sql.append(" idprod  = ? ");
@@ -207,11 +229,11 @@ public class ProdutoDao implements Dao{
 			stat.setString(1, p.getProduto());
 			stat.setString(2, p.getMarca());
 			stat.setString(3, p.getDescricao());
-			stat.setString(4, p.getOrigem().getLabel());
-			stat.setString(5, p.getCategoria().getLabel());
-			stat.setFloat(6, p.getPreco());
-			stat.setInt(7, p.getId());
+			stat.setFloat(4, p.getPreco());
+			stat.setInt(5, p.getId());
 			stat.execute();
+			
+			CaracteristicaDao.alterar(p);
 
 			Util.addErrorMessage("Produto alterado com sucesso!");
 		} catch (Exception e) {
@@ -248,17 +270,19 @@ public class ProdutoDao implements Dao{
 		StringBuffer sql = new StringBuffer();
 		
 		sql.append("SELECT ");
-		sql.append("  idprod, ");
-		sql.append("  produto, ");
-		sql.append("  marca, ");
-		sql.append("  descricao, ");
-		sql.append("  origem, ");
-		sql.append("  categoria, ");
-		sql.append("  preco ");
+		sql.append("  p.idprod, ");
+		sql.append("  p.produto, ");
+		sql.append("  p.marca, ");
+		sql.append("  p.descricao, ");
+		sql.append("  c.origem, ");
+		sql.append("  c.categoria, ");
+		sql.append("  p.preco ");
 		sql.append("FROM ");
-		sql.append("  produto ");
+		sql.append("  produto p, caracteristica c ");
 		sql.append("WHERE ");
 		sql.append("  idprod = ? ");
+		sql.append(" AND ");
+		sql.append("  idcara = ? ");
 
 	
 		PreparedStatement stat = null;
@@ -266,17 +290,18 @@ public class ProdutoDao implements Dao{
 		try {
 			stat = con.prepareStatement(sql.toString());
 			stat.setInt(1,id);
+			stat.setInt(2,id);
 			
 			ResultSet rs = stat.executeQuery();
 			
 		    if(rs.next()) {
 		    	p = new Produto();
+		    	Caracteristica carac = new Caracteristica(achaOrigem(rs.getString("origem")),achaCategoria(rs.getString("categoria")));
 				p.setId(rs.getInt("idprod"));
 				p.setProduto(rs.getString("produto"));
 				p.setMarca(rs.getString("marca"));
 				p.setDescricao(rs.getString("descricao"));
-				p.setOrigem(achaOrigem(rs.getString("origem")));
-				p.setCategoria(achaCategoria(rs.getString("categoria")));
+				p.setCaracteristica(carac);
 				p.setPreco(rs.getFloat("preco"));
 				
 			}
@@ -304,17 +329,21 @@ public class ProdutoDao implements Dao{
 	    StringBuffer sql = new StringBuffer();
 	    
 	    sql.append("SELECT ");
-	    sql.append("  idprod, ");
-		sql.append("  produto, ");
-		sql.append("  marca, ");
-		sql.append("  descricao, ");
-		sql.append("  origem, ");
-		sql.append("  categoria, ");
-		sql.append("  preco ");
-		sql.append("FROM produto ");
+	    sql.append("  p.idprod, ");
+		sql.append("  p.produto, ");
+		sql.append("  p.marca, ");
+		sql.append("  p.descricao, ");
+		sql.append("  p.preco, ");
+		sql.append("  c.origem, ");
+		sql.append("  c.categoria ");
+		sql.append(" FROM ");
+		sql.append(" produto p, ");
+		sql.append(" caracteristica c ");
 		sql.append("WHERE ");
-		sql.append("categoria = ");
+		sql.append(" c.categoria = ");
 		sql.append("'"+filtro+"'");
+		sql.append(" AND ");
+		sql.append(" p.idprod = c.idcara ");
 		
 		PreparedStatement stat = null;
 		
@@ -331,8 +360,8 @@ public class ProdutoDao implements Dao{
 				p.setProduto(rs.getString("produto"));
 				p.setMarca(rs.getString("marca"));
 				p.setDescricao(rs.getString("descricao"));
-				p.setOrigem(achaOrigem(rs.getString("origem")));
-				p.setCategoria(achaCategoria(rs.getString("categoria")));
+				p.getCaracteristica().setOrigem(achaOrigem(rs.getString("origem")));
+				p.getCaracteristica().setCategoria(achaCategoria(rs.getString("categoria")));
 				p.setPreco(rs.getFloat("preco"));
 				
 				listaprod.add(p);
@@ -363,18 +392,22 @@ public class ProdutoDao implements Dao{
 		
 		StringBuffer sql = new StringBuffer();
 		
-		 sql.append("SELECT ");
-		    sql.append("  idprod, ");
-			sql.append("  produto, ");
-			sql.append("  marca, ");
-			sql.append("  descricao, ");
-			sql.append("  origem, ");
-			sql.append("  categoria, ");
-			sql.append("  preco ");
-			sql.append("FROM produto ");
+		    sql.append("SELECT ");
+		    sql.append("  p.idprod, ");
+			sql.append("  p.produto, ");
+			sql.append("  p.marca, ");
+			sql.append("  p.descricao, ");
+			sql.append("  p.preco, ");
+			sql.append("  c.origem, ");
+			sql.append("  c.categoria ");
+			sql.append("FROM ");
+			sql.append(" produto p,");
+			sql.append(" caracteristica c ");
 			sql.append("WHERE ");
-			sql.append("produto = ");
+			sql.append(" produto = ");
 			sql.append("'"+filtro+"'");
+			sql.append(" AND ");
+			sql.append(" p.idprod = c.idcara ");
 			
 			PreparedStatement stat = null;
 			
@@ -391,8 +424,8 @@ public class ProdutoDao implements Dao{
 					p.setProduto(rs.getString("produto"));
 					p.setMarca(rs.getString("marca"));
 					p.setDescricao(rs.getString("descricao"));
-					p.setOrigem(achaOrigem(rs.getString("origem")));
-					p.setCategoria(achaCategoria(rs.getString("categoria")));
+					p.getCaracteristica().setOrigem(achaOrigem(rs.getString("origem")));
+					p.getCaracteristica().setCategoria(achaCategoria(rs.getString("categoria")));
 					p.setPreco(rs.getFloat("preco"));
 					
 					listaprod.add(p);

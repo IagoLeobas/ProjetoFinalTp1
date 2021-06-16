@@ -38,17 +38,17 @@ public class CarrinhoController implements Serializable {
 			return;
 		}
 
-		// adicionando o usuario logado na venda
+		
 		getVenda().setUsuario(usuario);
 
-		// salvando no banco de dados
+	
 		VendaDao dao = new VendaDao();
 		if (dao.inserir(getVenda())) {
-			dao.insereVal(getVenda().getId());
+			dao.insereVal(getVenda());
 			Util.addInfoMessage("Venda realizada com sucesso.");
-			// limpando o carrinho
+		
 			Session.getInstance().set("carrinho", null);
-			// limpar a venda
+		
 			setVenda(null);
 		} else {
 			Util.addErrorMessage("Problemas ao concluir a venda. Tente novamente mais tarde.");
@@ -56,7 +56,7 @@ public class CarrinhoController implements Serializable {
 
 	}
 
-	public float pegaTot(List<ItemVenda> lista) {
+	public static float pegaTot(List<ItemVenda> lista) {
 
 		float tot = 0;
 

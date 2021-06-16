@@ -7,6 +7,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
 import Application.FlashEasy;
+import Dao.CaracteristicaDao;
 import Dao.ProdutoDao;
 import model.Categoria;
 import model.Origem;
@@ -48,6 +49,7 @@ public class ProdutoController implements Serializable{
 
 public void adicionar() {
 	   ProdutoDao.adicionar(getProd());
+	   CaracteristicaDao.adicionar(getProd());
 	   atualizador();
 	   limpar();
    }

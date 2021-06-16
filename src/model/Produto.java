@@ -1,7 +1,6 @@
 package model;
 
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 
 public class Produto {
 
@@ -11,8 +10,7 @@ public class Produto {
 	private String descricao;
 	@NotEmpty(message = "Campo marca não pode estar vazio!")
 	private String marca;
-	private Categoria categoria;
-	private Origem origem;
+	private Caracteristica caracteristica;
 	private float preco;
 	private int id;
 
@@ -21,14 +19,13 @@ public class Produto {
 	}
 
 	public Produto(String produto, String descricao, String marca, Origem origem, int id, Categoria categoria,
-			float preco) {
+			float preco,Caracteristica caracteristica) {
 		super();
 		this.produto = produto;
 		this.descricao = descricao;
 		this.marca = marca;
-		this.origem = origem;
+		this.caracteristica = caracteristica;
 		this.id = id;
-		this.categoria = categoria;
 		this.preco = preco;
 
 	}
@@ -57,14 +54,6 @@ public class Produto {
 		this.marca = marca;
 	}
 
-	public Origem getOrigem() {
-		return origem;
-	}
-
-	public void setOrigem(Origem origem) {
-		this.origem = origem;
-	}
-
 	public int getId() {
 		return id;
 	}
@@ -73,13 +62,6 @@ public class Produto {
 		this.id = id;
 	}
 
-	public Categoria getCategoria() {
-		return categoria;
-	}
-
-	public void setCategoria(Categoria categoria) {
-		this.categoria = categoria;
-	}
 
 	public float getPreco() {
 		return preco;
@@ -109,6 +91,17 @@ public class Produto {
 		if (id != other.id)
 			return false;
 		return true;
+	}
+
+	public Caracteristica getCaracteristica() {
+		if(caracteristica == null) {
+			caracteristica = new Caracteristica();
+		}
+		return caracteristica;
+	}
+
+	public void setCaracteristica(Caracteristica caracteristica) {
+		this.caracteristica = caracteristica;
 	}
 
 }
