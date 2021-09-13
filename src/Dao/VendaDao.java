@@ -26,42 +26,25 @@ public class VendaDao implements Dao {
 		} catch (SQLException e1) {
 			e1.printStackTrace();
 		}
-		
 
 		StringBuffer sql = new StringBuffer();
 		sql.append("INSERT INTO venda ");
-		sql.append(" (data, idusuario) "); 
+		sql.append(" (data, idusuario) ");
 		sql.append("VALUES ");
 		sql.append(" (?, ?) ");
-		
-		
 
 		PreparedStatement stat = null;
 		try {
-			
+
 			stat = con.prepareStatement(sql.toString(), Statement.RETURN_GENERATED_KEYS);
 			stat.setDate(1, java.sql.Date.valueOf(LocalDate.now()));
 			stat.setInt(2, obj.getUsuario().getId());
-			
-
 			stat.execute();
-			
-			
-			
-
 			ResultSet rs = stat.getGeneratedKeys();
 			if (rs.next()) {
 				obj.setId(rs.getInt("idvenda"));
-				
 			}
-			
-				
-			
-			
-			
 			salvarItens(obj, con);
-			
-			
 			con.commit();
 
 		} catch (SQLException e) {
@@ -92,7 +75,7 @@ public class VendaDao implements Dao {
 	}
 
 	private void salvarItens(Venda venda, Connection conn) throws SQLException {
-	
+
 		StringBuffer sql = new StringBuffer();
 		sql.append("INSERT INTO itemvenda ");
 		sql.append(" (quantidade, valorunit, iditem, idvenda) ");
@@ -108,9 +91,7 @@ public class VendaDao implements Dao {
 			stat.setInt(4, venda.getId());
 
 			stat.execute();
-
 		}
-
 	}
 
 	public boolean alterar(Venda obj) {
@@ -147,7 +128,6 @@ public class VendaDao implements Dao {
 				venda.setData(rs.getDate("data").toLocalDate());
 				venda.setUsuario(usuario);
 				venda.setListaItemVenda(obterItensVenda(venda));
-				
 
 				listaVenda.add(venda);
 			}
@@ -272,98 +252,61 @@ public class VendaDao implements Dao {
 			return Origem.NACIONAL;
 		return null;
 	}
-	
-	
-	public float somaVal(Connection con,int id, Venda venda) {
-		
+
+	public float somaVal(Connection con, int id, Venda venda) {
+
 		float val = 0;
-		
+
 		StringBuffer sql = new StringBuffer();
-		
+
 		sql.append(" SELECT valorunit,quantidade ");
 		sql.append(" FROM ");
 		sql.append(" itemvenda ");
 		sql.append(" WHERE idvenda = ");
 		sql.append(id);
-		
+
 		PreparedStatement stat = null;
-		
+
 		try {
 			stat = con.prepareStatement(sql.toString());
 			ResultSet rs = stat.executeQuery();
-			
-			while(rs.next()) {
-				
+
+			while (rs.next()) {
+
 				int quant = rs.getInt("quantidade");
 				val += rs.getFloat("valorunit") * quant;
-				
-				
 			}
-			
-			
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
 		System.out.println(val);
 		return val;
-		
-		
-		
 	}
-	
+
 	public void insereVal(Venda venda) {
-		
-		Connection con = Dao.getConnection();		
-		
+
+		Connection con = Dao.getConnection();
+
 		StringBuffer sql = new StringBuffer();
-		
+
 		sql.append(" UPDATE venda ");
 		sql.append(" SET total = ? ");
 		sql.append(" WHERE idvenda = ");
 		sql.append(venda.getId());
-		
-		
+
 		PreparedStatement stat = null;
-		
-		
+
 		try {
 			stat = con.prepareStatement(sql.toString());
-			stat.setFloat(1,somaVal(con,venda.getId(),venda));
+			stat.setFloat(1, somaVal(con, venda.getId(), venda));
 
 			stat.execute();
-			
-			
-			
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
-		
-		
-		
 
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

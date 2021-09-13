@@ -98,6 +98,5 @@ public class VendaController implements Serializable{
 	public void setTipoFiltro(int tipoFiltro) {
 		this.tipoFiltro = tipoFiltro;
 	}
-	
 
 }

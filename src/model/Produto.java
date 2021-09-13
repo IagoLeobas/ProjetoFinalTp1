@@ -19,7 +19,7 @@ public class Produto {
 	}
 
 	public Produto(String produto, String descricao, String marca, Origem origem, int id, Categoria categoria,
-			float preco,Caracteristica caracteristica) {
+			float preco, Caracteristica caracteristica) {
 		super();
 		this.produto = produto;
 		this.descricao = descricao;
@@ -62,7 +62,6 @@ public class Produto {
 		this.id = id;
 	}
 
-
 	public float getPreco() {
 		return preco;
 	}
@@ -94,7 +93,7 @@ public class Produto {
 	}
 
 	public Caracteristica getCaracteristica() {
-		if(caracteristica == null) {
+		if (caracteristica == null) {
 			caracteristica = new Caracteristica();
 		}
 		return caracteristica;

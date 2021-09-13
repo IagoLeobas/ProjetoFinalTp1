@@ -9,6 +9,7 @@ import javax.faces.context.Flash;
 import javax.inject.Named;
 
 import Application.FlashEasy;
+import Dao.ProdutoDao;
 import Dao.UsuarioDao;
 import model.Usuario;
 
@@ -23,70 +24,64 @@ public class ConsultaUsuController implements Serializable {
 	private List<Usuario> listausu;
 	private String filtro;
 
-
 	public void remover(Usuario u) {
 		UsuarioDao.remover(u);
-		
+		atualizador();
 	}
-	
-	
-	 public String editar(Usuario u) {
-		 	Usuario usu = new Usuario();
-		 	usu = UsuarioDao.obterUm(u.getId());
-	    	Flash flash = FlashEasy.getInstance();	
-	    	flash.put("usuTemp",usu);
-	    	
-	    	return "usuario.xhtml?faces-redirect=true";
-	 }
-	 
-	 public void pesquisar() {
-			
-			List<Usuario> listaFiltro = new ArrayList<Usuario>();
-			
-			for(int i=0; i < getListausu().size();i++) {
-				if(listausu.get(i).getNome().toLowerCase().contains(filtro.toLowerCase())) {
-					
-					listaFiltro.add(listausu.get(i));
-				}
-				
-				
-			}
-			listausu = listaFiltro;
-		}
-		
-		public void voltarLista() {
-			listausu = getListausu();
-			filtro = null;
-			
-		}
 
+	public void atualizador() {
+
+		listausu = UsuarioDao.obtertodos();
+
+	}
+
+	public String editar(Usuario u) {
+		Usuario usu = UsuarioDao.obterUm(u.getId());
+
+		Flash flash = FlashEasy.getInstance();
+		flash.keep("usuTemp");
+		flash.put("usuTemp", usu);
+
+		return "/pages/usuario.xhtml?faces-redirect=true";
+	}
+
+	public void pesquisar() {
+
+		List<Usuario> listaFiltro = new ArrayList<Usuario>();
+
+		for (int i = 0; i < getListausu().size(); i++) {
+			if (listausu.get(i).getNome().toLowerCase().contains(filtro.toLowerCase())) {
+
+				listaFiltro.add(listausu.get(i));
+			}
+
+		}
+		listausu = listaFiltro;
+	}
+
+	public void voltarLista() {
+		listausu = getListausu();
+		filtro = null;
+
+	}
 
 	public List<Usuario> getListausu() {
-		if(listausu == null) {
+		if (listausu == null) {
 			listausu = UsuarioDao.obtertodos();
 		}
 		return listausu;
 	}
 
-
 	public void setListausu(List<Usuario> listausu) {
 		this.listausu = listausu;
 	}
-
 
 	public String getFiltro() {
 		return filtro;
 	}
 
-
 	public void setFiltro(String filtro) {
 		this.filtro = filtro;
 	}
-	 
-	 
-	 
-	 
-	 
-	 
-	
+
 }

@@ -15,7 +15,7 @@ import model.Usuario;
 @Named
 @ViewScoped
 public class UsuarioController implements Serializable {
-	
+
 	/**
 	 * 
 	 */
@@ -24,68 +24,63 @@ public class UsuarioController implements Serializable {
 	private List<Usuario> listaUsu;
 	private TipoU[] tipo;
 	private boolean ativador = false;
-	
-	public UsuarioController()
-	{
+
+	public UsuarioController() {
 		Flash flash = FlashEasy.getInstance();
 		flash.keep("usuTemp");
 		setUsu((Usuario) flash.get("usuTemp"));
-		if(usu != null) {
+		if (usu != null) {
 			setAtivador(true);
 		}
-		
-		
-		
+
 	}
-	
-		public String voltar() {
-		   limpar();
-		   return "consultausu.xhtml?faces-redirect=true";
-	   }
-	
+
+	public String voltar() {
+		limpar();
+		return "/pages/consultausu.xhtml?faces-redirect=true";
+	}
+
 	public void adicionar() {
 		UsuarioDao.adicionar(getUsu());
 		limpar();
 	}
-	
-	
-	
+
 	public void alterar() {
 		UsuarioDao.alterar(getUsu());
 		limpar();
-		
-		
+
 	}
-	
-    public void limpar() {
-    	setUsu(null);
-    }
-	
-	
+
+	public void limpar() {
+		setUsu(null);
+	}
+
 	public TipoU[] getTipo() {
-	    if(tipo == null) {
-	    	tipo = TipoU.values();
-	    }
-	    return tipo;
-		
-		
+		if (tipo == null) {
+			tipo = TipoU.values();
+		}
+		return tipo;
+
 	}
-	
+
 	public Usuario getUsu() {
-		if(usu == null) {
+		if (usu == null) {
 			usu = new Usuario();
 		}
 		return usu;
 	}
+
 	public void setUsu(Usuario usu) {
 		this.usu = usu;
 	}
+
 	public List<Usuario> getListaUsu() {
-		if(listaUsu == null) {
+		if (listaUsu == null) {
 			listaUsu = UsuarioDao.obtertodos();
 		}
 		return listaUsu;
 	}
+
 	public void setListaUsu(List<Usuario> listaUsu) {
 		this.listaUsu = listaUsu;
 	}
@@ -97,10 +92,4 @@ public class UsuarioController implements Serializable {
 	public void setAtivador(boolean ativador) {
 		this.ativador = ativador;
 	}
-	
-	
-	
-	
-	
-	
 }

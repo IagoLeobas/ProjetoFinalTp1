@@ -5,6 +5,7 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:iu="http://xmlns.jcp.org/jsf/facelets">
+	
 <h:head>
 	<h:outputStylesheet library="css" name="bootstrap.min.css" />
 	<h:outputStylesheet library="css" name="template.css" />
@@ -27,7 +28,7 @@
 					<h:outputLabel value="Bem vindo" />
 					<h:form>
 						<div>
-							<h:commandLink value=" (voltar)"
+							<h:commandLink value=" (Voltar)"
 								action="login.xhtml?faces-redirect=true" style="color:white" />
 						</div>
 					</h:form>
@@ -38,37 +39,37 @@
 
 	<div id="cad">
 		<h1>Cadastre-se</h1>
-		<h:messages style="color:blue;margin:8px;" id="message" />
+		<h:messages id="message" class="alert alert-secondary" role="alert" />
 		<h:form id="cadastro">
 
 
 			<h:panelGrid columns="2" id="pg1">
 
 				<h:outputLabel value="Nome" />
-				<h:inputText value="#{cadastroController.usu.nome}" />
+				<h:inputText class="form-control form-control-sm" type="text" value="#{cadastroController.usu.nome}" />
 
 				<h:outputLabel value="Email" />
-				<h:inputText value="#{cadastroController.usu.email}" />
+				<h:inputText class="form-control form-control-sm" type="text" value="#{cadastroController.usu.email}" />
 
 				<h:outputLabel value="Login" />
-				<h:inputText value="#{cadastroController.usu.login}" />
+				<h:inputText class="form-control form-control-sm" type="text" value="#{cadastroController.usu.login}" />
 
 				<h:outputLabel value="senha" />
-				<h:inputText value="#{cadastroController.usu.senha}" />
+				<h:inputText class="form-control form-control-sm" type="text" value="#{cadastroController.usu.senha}" />
 
 				<h:outputLabel value="Cpf" />
-				<h:inputText value="#{cadastroController.usu.cpf}" />
+				<h:inputText class="form-control form-control-sm" type="text" value="#{cadastroController.usu.cpf}" />
 
 
 			</h:panelGrid>
 
 			<h:panelGroup id="comandos">
-				<h:commandButton value="adicionar"
+				<h:commandButton value="adicionar" class="btn btn-outline-dark"
 					action="#{cadastroController.adicionar}">
 					<f:ajax execute="cadastro" render="data pg1 message" />
 				</h:commandButton>
 
-				<h:commandButton value="limpar"
+				<h:commandButton value="limpar" class="btn btn-outline-dark"
 					actionListener="#{cadastroController.limpar}">
 					<f:ajax execute="@this" render="pg1 message" />
 				</h:commandButton>

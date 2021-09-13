@@ -8,81 +8,67 @@ import Application.Util;
 import model.Produto;
 
 public class CaracteristicaDao {
-						
-	
+
 	public static void adicionar(Produto p) {
-		
+
 		Connection con = Dao.getConnection();
-		
+
 		StringBuffer sql = new StringBuffer();
-		
+
 		sql.append("INSERT INTO caracteristica ");
 		sql.append(" (idcara,categoria,origem) ");
 		sql.append(" VALUES");
 		sql.append(" (?, ?, ?) ");
-		
+
 		PreparedStatement stat = null;
-		
+
 		try {
 			stat = con.prepareStatement(sql.toString());
 			stat.setInt(1, p.getCaracteristica().getId());
 			stat.setString(2, p.getCaracteristica().getCategoria().getLabel());
 			stat.setString(3, p.getCaracteristica().getOrigem().getLabel());
 			stat.execute();
-			
-			
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-
-		
-		
 	}
-	
-	
+
 	public static void remover(Produto p) {
-		
+
 		Connection con = Dao.getConnection();
-		
+
 		StringBuffer sql = new StringBuffer();
-		
+
 		sql.append("DELETE FROM caracteristica ");
 		sql.append(" WHERE idcara = ");
 		sql.append(p.getId());
-		
+
 		PreparedStatement stat = null;
-		
+
 		try {
 			stat = con.prepareStatement(sql.toString());
 			stat.execute();
-			
-			
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
-		
-		
-		
+
 	}
-	
-	
-public static void alterar(Produto p){
-		
+
+	public static void alterar(Produto p) {
+
 		Connection con = Dao.getConnection();
-		
+
 		StringBuffer sql = new StringBuffer();
 		sql.append("UPDATE caracteristica SET ");
 		sql.append(" origem = ?, ");
 		sql.append(" categoria = ? ");
 		sql.append("WHERE ");
 		sql.append(" idcara  = ? ");
-		
-	
+
 		PreparedStatement stat = null;
 		try {
 			stat = con.prepareStatement(sql.toString());
@@ -107,31 +93,5 @@ public static void alterar(Produto p){
 				e.printStackTrace();
 			}
 		}
-		
-		
-		
-		
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }
