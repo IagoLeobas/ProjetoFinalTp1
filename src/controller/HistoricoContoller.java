@@ -3,10 +3,14 @@ package controller;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.faces.context.FacesContext;
+import javax.faces.context.Flash;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
+import Application.FlashEasy;
 import Application.Session;
+import Application.Util;
 import Dao.VendaDao;
 import model.Usuario;
 import model.Venda;
@@ -24,7 +28,12 @@ public class HistoricoContoller implements Serializable {
 	private List<Venda> listavendas;
 	private Usuario usuarioLogado;
 	
-	
+	public void detalhes(Venda venda) {
+		Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
+		flash.put("detalhesFlash", venda);
+		
+		Util.redirect("detalhesvenda.xhtml");
+	}
 	
 	
 	public List<Venda> getListavendas() {

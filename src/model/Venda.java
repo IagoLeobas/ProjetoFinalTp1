@@ -50,5 +50,4 @@ public class Venda {
 		this.listaItemVenda = listaItemVenda;
 	}
 
-	
 }

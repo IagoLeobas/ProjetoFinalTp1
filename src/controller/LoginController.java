@@ -13,11 +13,9 @@ import Dao.UsuarioDao;
 import model.TipoU;
 import model.Usuario;
 
-
-
 @Named
 @RequestScoped
-public class LoginController implements Serializable{
+public class LoginController implements Serializable {
 	/**
 	 * 
 	 */
@@ -25,62 +23,47 @@ public class LoginController implements Serializable{
 	private Usuario usu;
 	private TipoU tipo[];
 	List<Usuario> listaU;
-	
-	
-	public String logar() {
 
-			Usuario usuarioLogado = UsuarioDao.validarLogin(usu);
-			if (usuarioLogado != null) {
-				Session.getInstance().set("usuarioLogado", usuarioLogado);
-				return "template.xhtml?faces-redirect=true";
-				
-			}
-			
-		Util.addErrorMessage("Senha, usuário ou tipo inválidos!"); 
+	public String logar() {
+		Usuario usuarioLogado = UsuarioDao.validarLogin(usu);
+		if (usuarioLogado != null) {
+			Session.getInstance().set("usuarioLogado", usuarioLogado);
+			return "template.xhtml?faces-redirect=true";
+
+		}
+
+		Util.addErrorMessage("Senha, usuário ou tipo inválidos!");
 		return null;
 	}
 
-	
 	public TipoU[] getTipo() {
-		if(tipo == null) {
+		if (tipo == null) {
 			tipo = TipoU.values();
 		}
 		return tipo;
-		
+
 	}
 
 	public Usuario getUsu() {
-		if(usu == null) {
+		if (usu == null) {
 			usu = new Usuario();
 		}
 		return usu;
 	}
 
-
 	public void setUsu(Usuario usu) {
 		this.usu = usu;
 	}
 
-
 	public List<Usuario> getListaU() {
-		if(listaU == null) {
+		if (listaU == null) {
 			listaU = new ArrayList<Usuario>();
 		}
 		return listaU;
 	}
 
-
 	public void setListaU(List<Usuario> listaU) {
 		this.listaU = listaU;
 	}
 
-
-
-	
-	
-	
-	
-	
-	
-	
 }

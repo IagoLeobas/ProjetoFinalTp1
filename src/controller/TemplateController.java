@@ -21,7 +21,7 @@ public class TemplateController implements Serializable {
 
 	public String encerrarSessao() {
 		Session.getInstance().invalidateSession();
-		return "login.xhtml?faces-redirect=true";
+		return "/faces/login.xhtml?faces-redirect=true";
 	}
 
 	public Usuario getUsuarioLogado() {

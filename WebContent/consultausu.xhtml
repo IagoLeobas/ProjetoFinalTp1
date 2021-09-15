@@ -9,30 +9,41 @@
 <h:outputStylesheet library="css" name="style.css" />
 <iu:composition template="/template.xhtml">
 	<iu:define name="conteudo">
-		<h:head>
-			<title>Consulta de usuários</title>
-
-		</h:head>
 		<h:form id="usuario">
-			<h:body>
-				<h:messages style="color:blue;margin:8px;" id="message" />
-				<h:panelGroup id="pg2">
-					<h:column>
-						<h:commandButton value="Pesquisar"
-							actionListener="#{consultaUsuController.pesquisar}" />
-						<h:inputText value="#{consultaUsuController.filtro}" id="pesquisa">
-							<f:ajax execute="@this" render="data pesquisa" event="blur"
-								listener="#{consultaUsuController.voltarLista}" />
-						</h:inputText>
-					</h:column>
 
-					<h:dataTable value="#{consultaUsuController.listausu}" var="obj"
-						id="data">
+			<!-- Container -->
+			<div class="container-fluid">
+				<div class="row justify-content-md-center">
+					<div class="col-md-6 col-md-auto login-box">
+						<h:messages class="alert alert-secondary" role="alert" />
 
-						<h:column>
-							<f:facet name="header">Id</f:facet>
-							<h:outputLabel value="#{obj.id}" />
-						</h:column>
+						<div class="form-row">
+							<div class="form-group col-md-12">
+								<h1 class="text-center wdi-red">Consulta de usuários</h1>
+							</div>
+						</div>
+						<hr />
+
+						<h:form>
+							<div class="form-row">
+								<div class="form-group col-md-8">
+
+									<h:inputText type="text" class="form-control"
+										value="#{consultaUsuController.filtro}" id="pesquisa">
+										<f:ajax execute="@this" render="data pesquisa" event="blur"
+											listener="#{consultaUsuController.voltarLista}" />
+									</h:inputText>
+								</div>
+								<div class="form-group col-md-2">
+									<h:commandButton value="Pesquisar" class="btn btn-dark"
+										actionListener="#{consultaUsuController.pesquisar}" />
+								</div>
+							</div>
+						</h:form>
+					</div>
+
+					<h:dataTable class="table table-hover table-dark"
+						value="#{consultaUsuController.listausu}" var="obj" id="data">
 
 						<h:column>
 							<f:facet name="header">Nome</f:facet>
@@ -45,16 +56,6 @@
 						</h:column>
 
 						<h:column>
-							<f:facet name="header">login</f:facet>
-							<h:outputLabel value="#{obj.login}" />
-						</h:column>
-
-						<h:column>
-							<f:facet name="header">Senha</f:facet>
-							<h:outputLabel value="#{obj.senha}" />
-						</h:column>
-
-						<h:column>
 							<f:facet name="header">Cpf</f:facet>
 							<h:outputLabel value="#{obj.cpf}" />
 						</h:column>
@@ -64,42 +65,23 @@
 							<h:outputLabel value="#{obj.tipo}" />
 						</h:column>
 
-
-
 						<h:column>
-							<f:facet name="header">Ação</f:facet>
-							<h:commandButton value="Editar"
+							<h:commandButton value="Editar" class="btn btn-outline-light"
 								action="#{consultaUsuController.editar(obj)}"
 								disabled="#{templateController.limitador == false}">
-								<f:ajax execute="@this" render="@form:usuario @form:message" />
-								
+								<f:ajax execute="@this" render="@form:usuario" />
 							</h:commandButton>
 
-							<h:commandButton value="Remover"
+							<h:commandButton value="Remover" class="btn btn-outline-light"
 								actionListener="#{consultaUsuController.remover(obj)}"
 								disabled="#{templateController.limitador == false}">
-								<f:ajax execute="@form:pg2" render="@form:usuario" />
-								
+								<f:ajax execute="@form" render="@form:usuario" />
 							</h:commandButton>
-
-
-
 						</h:column>
-
 					</h:dataTable>
-
-
-				</h:panelGroup>
-
-
-			</h:body>
-
+				</div>
+			</div>
 		</h:form>
-
-
-
-
 	</iu:define>
 </iu:composition>
-
 </html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html >
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:iu="http://xmlns.jcp.org/jsf/facelets">
+<h:outputStylesheet name="style.css" library="css" />
+<h:outputStylesheet library="css" name="style.css" />
+<iu:composition template="/template.xhtml">
+	<iu:define name="conteudo">
+		<h:form id="produto">
+			<!-- Container -->
+			<div class="container-fluid">
+				<div class="row justify-content-md-center">
+					<div class="col-md-6 col-md-auto login-box">
+						<h:messages class="alert alert-secondary" role="alert" />
+
+
+						<div class="form-row">
+							<div class="form-group col-md-12">
+								<h1 class="text-center wdi-red">Consulta de Produtos</h1>
+							</div>
+						</div>
+						<hr />
+						<h:form>
+							<div class="form-row">
+								<div class="form-group col-md-8">
+
+									<h:inputText type="text" class="form-control"
+										value="#{consultaProdController.filtro}" id="pesquisa">
+										<f:ajax execute="@this" render="data pesquisa" event="blur"
+											listener="#{consultaUsuController.voltarLista}" />
+									</h:inputText>
+								</div>
+								<div class="form-group col-md-2">
+									<h:commandButton value="Pesquisar" class="btn btn-dark"
+										actionListener="#{consultaProdController.pesquisar}" />
+								</div>
+							</div>
+						</h:form>
+					</div>
+					<h:panelGroup id="pg2">
+						<h:dataTable class="table table-hover table-dark"
+							value="#{consultaProdController.listaProd}" var="obj" id="data">
+
+							<h:column>
+								<f:facet name="header">Produto</f:facet>
+								<h:outputLabel value="#{obj.produto}" />
+							</h:column>
+
+							<h:column>
+								<f:facet name="header">Descrição</f:facet>
+								<h:outputLabel value="#{obj.descricao}" />
+							</h:column>
+
+							<h:column>
+								<f:facet name="header">Marca</f:facet>
+								<h:outputLabel value="#{obj.marca}" />
+							</h:column>
+
+							<h:column>
+								<f:facet name="header">Origem</f:facet>
+								<h:outputLabel value="#{obj.caracteristica.origem}" />
+							</h:column>
+
+							<h:column>
+								<f:facet name="header">Categoria</f:facet>
+								<h:outputLabel value="#{obj.caracteristica.categoria}" />
+							</h:column>
+
+							<h:column>
+								<f:facet name="header">Preço</f:facet>
+								<h:outputLabel value="#{obj.preco}" />
+							</h:column>
+
+							<h:column>
+								<h:commandButton value="Editar" class="btn btn-outline-light"
+									action="#{consultaProdController.editar(obj)}"
+									disabled="#{templateController.limitador == false}">
+									<f:ajax execute="@this" render="@form:pg2" />
+								</h:commandButton>
+
+								<h:commandButton value="Remover" class="btn btn-outline-light"
+									actionListener="#{consultaProdController.remover(obj)}"
+									disabled="#{templateController.limitador == false}">
+									<f:ajax execute="@form:pg2" render="@form:pg2" />
+								</h:commandButton>
+							</h:column>
+						</h:dataTable>
+					</h:panelGroup>
+
+				</div>
+			</div>
+		</h:form>
+	</iu:define>
+</iu:composition>
+</html>

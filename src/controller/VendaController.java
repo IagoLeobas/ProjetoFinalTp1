@@ -43,10 +43,9 @@ public class VendaController implements Serializable{
 	}
 	
 	public void addCarrinho(Produto produto) {
-		// obtendo o carrinho da sessao
+
 		@SuppressWarnings("unchecked")
 		List<ItemVenda> carrinho = (List<ItemVenda>) Session.getInstance().get("carrinho");
-		// caso nao exista o carrinho na sessao ... criar uma nova instancia local
 		if (carrinho == null) 
 			carrinho = new ArrayList<ItemVenda>();
 		
@@ -99,6 +98,5 @@ public class VendaController implements Serializable{
 	public void setTipoFiltro(int tipoFiltro) {
 		this.tipoFiltro = tipoFiltro;
 	}
-	
 
 }

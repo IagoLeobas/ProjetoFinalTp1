@@ -1,0 +1,75 @@
+<!DOCTYPE html >
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:iu="http://xmlns.jcp.org/jsf/facelets">
+
+<iu:composition template="/template.xhtml">
+	<iu:define name="conteudo">
+		<title>usuario</title>
+		<h:body>
+			<h1>Cadastro usuario</h1>
+			<h:messages id="message" class="alert alert-secondary" role="alert" />
+			<h:form id="usuario">
+
+				<h:panelGrid columns="2" id="pg1">
+
+					<h:outputLabel value="Nome" />
+					<h:inputText class="form-control form-control-sm" type="text"
+						value="#{usuarioController.usu.nome}" />
+
+					<h:outputLabel value="Email" />
+					<h:inputText class="form-control form-control-sm" type="text"
+						value="#{usuarioController.usu.email}" />
+
+					<h:outputLabel value="Login" />
+					<h:inputText class="form-control form-control-sm" type="text"
+						value="#{usuarioController.usu.login}" />
+
+					<h:outputLabel value="senha" />
+					<h:inputText class="form-control form-control-sm" type="text"
+						value="#{usuarioController.usu.senha}" />
+
+
+					<h:outputLabel value="Tipo" />
+					<h:selectOneRadio value="#{usuarioController.usu.tipo}">
+						<f:selectItems value="#{usuarioController.tipo}" var="obj"
+							itemLabel="#{obj}" />
+					</h:selectOneRadio>
+
+					<h:outputLabel value="Cpf" />
+					<h:inputText class="form-control form-control-sm" type="text"
+						value="#{usuarioController.usu.cpf}" />
+
+
+				</h:panelGrid>
+
+				<h:panelGroup id="comandos">
+					<h:commandButton value="adicionar" class="btn btn-outline-dark"
+						actionListener="#{usuarioController.adicionar}">
+						<f:ajax execute="usuario" render="data pg1 message" />
+					</h:commandButton>
+
+					<h:commandButton value="alterar" class="btn btn-outline-dark"
+						actionListener="#{usuarioController.alterar}"
+						rendered="#{usuarioController.ativador}">
+						<f:ajax execute="usuario" render="data pg1 message" />
+					</h:commandButton>
+
+					<h:commandButton value="limpar" class="btn btn-outline-dark"
+						actionListener="#{usuarioController.limpar}">
+						<f:ajax execute="@this" render="pg1 message" />
+					</h:commandButton>
+
+					<h:commandButton value="Voltar" class="btn btn-outline-dark"
+						rendered="#{usuarioController.ativador}"
+						onclick="history.go(-1); return false;" />
+				</h:panelGroup>
+			</h:form>
+		</h:body>
+		<h:outputScript library="javax.faces" name="jsf.js" target="head" />
+	</iu:define>
+</iu:composition>
+</html>

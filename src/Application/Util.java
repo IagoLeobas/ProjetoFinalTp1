@@ -1,5 +1,7 @@
 package Application;
 
+import java.io.IOException;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.application.FacesMessage.Severity;
 import javax.faces.context.FacesContext;
@@ -34,6 +36,18 @@ public class Util {
 		FacesContext.getCurrentInstance().
 		addMessage(clientId, 
 				new FacesMessage(severity, msg, null));
+	}
+	
+	/*
+	 * esse redirect é usado para redirecionar para determinada página
+	 */
+	public static void redirect(String page) {
+		try {
+			FacesContext.getCurrentInstance().getExternalContext().redirect(page);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 	
